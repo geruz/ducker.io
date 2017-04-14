@@ -22,6 +22,7 @@ export class CalendarIndexComponent implements OnInit {
     public appState: AppState, 
     public snackBar: MdSnackBar,
     public route: ActivatedRoute,
+    public _router: Router,
     ) { }
 
   public ngOnInit() {
@@ -58,7 +59,6 @@ export class CalendarIndexComponent implements OnInit {
   }
 
   public ngAfterViewInit() {
-
   }  
 
 
@@ -71,11 +71,26 @@ export class CalendarIndexComponent implements OnInit {
 
   public createNew() {
 
-    this.appState.createCalendarItem().subscribe(
-      (data) => {
-        console.log('complete');
-      });
+    let slug_created: string;
 
+    this.appState.createCalendarItem().subscribe(
+      (data: string) => {
+        this.updateDocumentRender();
+        slug_created = data;
+        console.log('Subscribe by CREATE NEW () ' + slug_created);   
+
+       this._router.navigate(['/calendar/item/', slug_created]);
+    });
+
+
+  }
+
+  public updateDocumentRender() {
+    
+    this.appState.getCalendarAll().subscribe(
+      (data) => {
+        console.debug('W: ' + data);
+      });
   }
 
 

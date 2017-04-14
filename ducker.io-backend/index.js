@@ -85,6 +85,8 @@ app.post('/calendar/item/:slug/update', function(req, res) {
 
 app.post('/calendar/new', function(req, res) {
 
+		var id = req.body.tagsExit;
+
         let currentDate = new Date();
 // month array
         let month = new Array();
@@ -125,16 +127,12 @@ app.post('/calendar/new', function(req, res) {
 
         // console.log('OUTPUT: ' + toSlug);	
 
-		db.all("INSERT INTO `calendar_list`(`date`,`title`,`slug`,`content`,`tags_id`) VALUES ('" + currentDate.getTime() + "','" + title + "','" + toSlug + "','','0');",
+		db.all("INSERT INTO `calendar_list`(`date`,`title`,`slug`,`content`,`tags_id`) VALUES ('" + currentDate.getTime() + "','" + title + "','" + toSlug + "','','');",
 			function(e,r) {
-				console.log('INSERT');
-
-				this._CalendarItems = null;
-				setCalendarItems();
+				console.log('{!} INSERT IN DB `calendar_list`');
+				exit = updateDataBase();
 			});
-
-		res.json('КЛАСС');
-		
+		res.json(toSlug);
 });
 
 // RUN SERVER & DB IMPORT
@@ -213,5 +211,27 @@ function findCalendarItemsByTagId(_slug) {
 	var _exit = [];
 
 	return _exit;
+}
+
+function updateDataBase() {
+		db.all("SELECT * FROM `calendar_list` ORDER BY `id`", 
+			function(e,r) {
+
+					_CalendarItems = r;
+					
+					_CalendarItems.forEach(function(element, index) {
+						var _TEMP = [];
+
+						element['tags_id'] = element['tags_id'].split(',');
+						element['tags_id'].forEach(function(elem, ind) {
+							_TEMP[ind] = findTagByID(elem);							
+						});
+						// console.log('TAGS:ID: ' + JSON.stringify(_TEMP));
+						element['tags_id'] = _TEMP;
+					});	
+									
+					
+					console.log('[!] [UPDATE: DB -> CACHE] >> CALENDAR LIST  t: `calendar_list`');
+		});	
 }
 

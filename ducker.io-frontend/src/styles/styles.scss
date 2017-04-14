@@ -452,9 +452,12 @@ a.logo {
 }
 
 .calendar-sidebar {
-  border: 1px solid $gray-4;
   width: 85%;
   margin-left: auto;
+}
+
+.calendar-sidebar .mat-list-item-content {
+  height: 40px !important;
 }
 
 .calendar-sidebar .mat-nav-list {
@@ -468,19 +471,18 @@ a.logo {
 }
 .calendar-sidebar a.mat-list-item.active .mat-list-item-content {
   background: #fff;
-  border-left: 3px solid $green-dark;
+  
   color: $gray-85;
   font-weight: 500;
 }
 .calendar-sidebar a.mat-list-item.active .mat-list-item-content:hover {
   background: #fff;
-  border-left: 3px solid $green-dark;
-  color: $green-dark;
 }
 
 .calendar-sidebar a.mat-list-item .mat-list-item-content:hover {
-  background-color: $light-green;
-  color: $green-light;
+  background-color: #fff;
+  color: $green-dark;
+  font-weight: 500;
 }
 .calendar-sidebar h1 {
   font-size: 11px;
@@ -526,20 +528,36 @@ a.logo {
 }
 
 .tagElement {
+    background: $light-blue;
+    border-radius: 3px;
+    padding-left: 16px;
+    margin-bottom: 4px;
 }
 
 .tagElementTitle {
-  color: $toolbar;
+  color: $blue;
   padding: 10px 0;
   cursor: default;
-  font-size: 16px;
+  font-size: 14px;
 }
 .fonts-small.mat-icon {
   font-size: 19px;
 }
 
+.tagEditor .mat-mini-fab.fab-small {
+  color: $blue-light !important;
+  border-radius: 0 !important;
+  -webkit-transition: all .3s;
+  transition: all .2s;
+}
+
+.tagEditor .mat-mini-fab.fab-small .mat-button-ripple {
+  border-radius: 0 !important;
+}
+
 .tagEditor .mat-mini-fab.fab-small:hover {
-  color: $blue;
+  color: #fff !important;
+  background: $super-green;
 }
 
 .tagInput input {

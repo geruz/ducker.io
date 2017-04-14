@@ -31,19 +31,19 @@ export class AppState {
   }  
 
 
-  public getCalendarAll():Observable<string> {
+  public getCalendarAll() {
     return this.http.get(this._api + '/calendar/item-list').map((res)=>res.json());
   }
 
-  public getCalendarItem(slug: string):Observable<string> {
+  public getCalendarItem(slug: string) {
     return this.http.get(this._api + '/calendar/item/' + slug).map((res)=>res.json());
   }
 
-  public getCalendarTagList():Observable<string> {
+  public getCalendarTagList() {
     return this.http.get(this._api + '/calendar/tag-list').map((res)=>res.json());
   }
 
-  public getCalendarTagItems(slug: string):Observable<string> {
+  public getCalendarTagItems(slug: string) {
     return this.http.get(this._api + '/calendar/tag/'+slug).map((res)=>res.json());
   }  
 
