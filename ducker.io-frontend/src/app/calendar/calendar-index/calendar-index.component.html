@@ -1,0 +1,62 @@
+<div class="subheader mar-b-24">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-12 flex-center-justify">
+
+                <div>
+                    <div class="flex-left-center">
+                        <h2>{{DocumentTitle}}</h2>
+                    </div>
+                </div>
+
+                <div>
+                </div>
+
+                <div>
+                    <button md-mini-fab class="fab-clear fab-gray" [mdMenuTriggerFor]="mainmenu" title="Управление днями"><md-icon>more_vertical</md-icon></button>
+                    <md-menu #mainmenu="mdMenu" positionX="before">
+                        <button md-menu-item (click)="createNew()">Новый день</button>
+                    </md-menu>
+                </div>
+
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-12 col-sm-7 col-md-8 col-lg-9">
+            <div class="row">
+
+                <a class="col-12 col-sm-12 col-md-6 col-lg-4 caledar-list-card" *ngFor="let rendered of DocumentRendered" routerLink="/calendar/item/{{rendered.slug}}">
+                    <div class="flex-left-center">
+                        <h3 class="list-title">{{rendered.title}}</h3>
+                    </div>
+                    <div class="caledar-list-card--tags">
+                        <div *ngFor="let tag of rendered.tags_id" class="caledar-list-card--tags-elem">
+                            <span *ngIf="tag">{{tag.title}}</span>
+                        </div>
+                    </div>
+                </a>  
+
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-5 col-md-4 col-lg-3">
+            <div class="calendar-sidebar">
+                <md-nav-list>
+                    <a md-list-item routerLink="/calendar" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Всё подряд</a>
+                    <a md-list-item *ngFor="let tags of TagsList" routerLink="/calendar/tag/{{tags.slug}}" routerLinkActive="active">{{tags.title}}</a>
+                </md-nav-list>
+            </div>
+        </div>
+
+    </div>
+    
+</div>
