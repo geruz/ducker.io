@@ -35,10 +35,13 @@ import { ROUTES } from './app.routes';
 import { AppComponent } from './app.component';
 import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState, InternalStateType } from './app.service';
+import { PagesControllerService } from './shared/pages-controller.service';
 import { HomeComponent } from './home';
 import { CalendarComponent } from './calendar/calendar.component';
 import { DialogsModule } from './calendar/dialogs/dialogs.module';
 import { CalendarIndexComponent } from './calendar/calendar-index/calendar-index.component';
+import { PagesIndexComponent } from './pages/pages-index/pages-index.component';
+import { PagesComponent } from './pages/pages.component';
 import { NoContentComponent } from './no-content';
 import { XLargeDirective } from './home/x-large';
 
@@ -51,6 +54,7 @@ import '../styles/zmnv-paddings.css';
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
   AppState,
+  PagesControllerService,
 ];
 
 type StoreType = {
@@ -69,6 +73,8 @@ type StoreType = {
     HomeComponent,
     CalendarComponent,
     CalendarIndexComponent,
+    PagesIndexComponent,
+    PagesComponent,
     NoContentComponent,
     XLargeDirective,
     HeadToolbarComponent,

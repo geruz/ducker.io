@@ -19,6 +19,8 @@ var app = express();
 var _CalendarItems;
 var _CalendarTaglist;
 
+var _PagesItems;
+
 app.use(allowCrossDomain);
 app.use(bodyParser.json());
 
@@ -178,6 +180,66 @@ app.post('/calendar/item/updateTags', function(req, res) {
 
 });
 
+
+// ******************* P A G E S ************************
+
+app.get('/pages/item-list', function (req, res) {
+	res.json(_PagesItems);
+});
+
+app.get('/pages/item/:slug', function (req, res) {
+
+	var slug = req.params.slug;
+	// console.log('slug: ' + slug);
+	var exit;
+
+	exit = jmespath.search(_PagesItems, "[?slug==`" + slug + "`]");
+
+	res.json(exit);
+
+});
+
+app.post('/pages/item/:slug/update', function(req, res) {
+	var id = req.body.target_id;
+	var content = req.body.content;
+	var slug = req.params.slug;
+
+	db.all("UPDATE `pages_list` SET `content`='" + content + "' WHERE `id`='" + id + "'",
+		function(e,r) {
+			console.log('>> R: ' + r);
+			console.log('>> E: ' + e);
+			_PagesItems = null;
+			setPagesItems();
+	});
+
+	res.json('Запись обновлена');
+});
+
+app.post('/pages/item/updateTags', function(req, res) {
+	
+	var id = req.body.target_id;
+	var tags_id = req.body.tags_id;
+
+	console.log('id: ' + id + ' / tags_id: ' + tags_id[0]['title']);
+
+	if(id) {
+
+		let go = findTagIdByTitle(tags_id[0]['title']);
+
+		
+		db.all("UPDATE `pages_list` SET `tags_id`='" + go + "' WHERE `id`='" + id + "'",
+			function(e,r) {
+				_PagesItems = null;
+				setPagesItems();
+		}); 
+
+		res.json('UPDATED PAGES TAGS');
+
+	} else res.json('NO UPDATED PAGES TAGS');
+
+});
+
+
 // RUN SERVER & DB IMPORT
 
 app.listen(4200, function () {
@@ -187,11 +249,15 @@ app.listen(4200, function () {
 
 	setCalendarTagsList();
 	setCalendarItems();
+	setPagesItems();
 
 });
 
-// FUNCTIONS
 
+//// F U N C T I O N S
+
+
+// >>>>>> C A L E N D A R
 
 function setCalendarItems() {
 
@@ -220,7 +286,6 @@ function setCalendarItems() {
 	}
 
 }
-
 
 function setCalendarTagsList() {
 
@@ -260,12 +325,45 @@ function findTagIdByTitle(title) {
 	return exit;
 }
 
-
 function findCalendarItemsByTagId(_slug) {
 	var _exit = [];
 
 	return _exit;
 }
+
+
+// >>>>>> P A G E S
+
+function setPagesItems() {
+
+	if(!_PagesItems) {
+		db.all("SELECT * FROM `calendar_list` ORDER BY `id`", 
+			function(e,r) {
+
+					_PagesItems = r;
+
+					console.log('R: ' + JSON.stringify(_PagesItems));
+					
+					_PagesItems.forEach(function(element, index) {
+						var _TEMP = [];
+
+						element['tags_id'] = element['tags_id'].split(',');
+						element['tags_id'].forEach(function(elem, ind) {
+							_TEMP[ind] = findTagByID(elem);							
+						});
+						// console.log('TAGS:ID: ' + JSON.stringify(_TEMP));
+						element['tags_id'] = _TEMP;
+					});	
+									
+					
+					console.log('[! DB -> CACHE] >> CALENDAR LIST  t: `calendar_list`');
+		});			
+	} else {
+		console.log('BY CACHE / CALENTAR LIST >>    SELECT <ALL> FROM `calendar_list` ORDER BY `id`');
+	}
+}
+
+// >>>>>>>>> C O M M O N
 
 function updateDataBase() {
 		db.all("SELECT * FROM `calendar_list` ORDER BY `id`", 

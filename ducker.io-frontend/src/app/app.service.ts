@@ -30,6 +30,7 @@ export class AppState {
     return this._document.title = title + ' • Ducker';
   }  
 
+  // >>>>> C A L E N D A R
 
   public getCalendarAll() {
     return this.http.get(this._api + '/calendar/item-list').map((res)=>res.json());
@@ -47,8 +48,6 @@ export class AppState {
     return this.http.get(this._api + '/calendar/tag/'+slug).map((res)=>res.json());
   }  
 
-
-
   public updateCalendarItem(id, content, slug) {
 
     let headers = new Headers();
@@ -64,7 +63,6 @@ export class AppState {
     return this.http.post(this._api + '/calendar/item/' + slug + '/update', params, {headers: headers}).map((res)=>res.json());    
 
   }
-
 
   public updateCalendarTag(id, tags) {
 
@@ -82,8 +80,6 @@ export class AppState {
     return this.http.post(this._api + '/calendar/item/updateTags', params, {headers: headers}).map((res)=>res.json());    
 
   }
-
-
 
   public createCalendarItem() {
     
@@ -111,6 +107,10 @@ export class AppState {
     return this.http.post(this._api + '/calendar/item/' + slug + '/remove', params, {headers: headers}).map((res)=>res.json());    
    
   }
+
+  // >>>>>> P A G E S 
+
+
 
 
 }

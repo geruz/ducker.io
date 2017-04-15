@@ -5,8 +5,8 @@
                 <div class="flex-left-center">
 
 					<div class="mar-r-16 mar-t-3">
-						<button routerLink="/pages/" md-mini-fab class="fab-clear fab-gray">
-						<md-icon>date_range</md-icon>
+						<button routerLink="/calendar/" md-mini-fab class="fab-clear fab-gray">
+						<md-icon>library_books</md-icon>
 						</button>                        
 					</div>
 
@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="col-5 col-sm-4 col-md-3 col-lg-2 editor flex-right-center">
-                <button md-button color="primary" (click)="createNew()">НОВЫЙ ДЕНЬ</button>
+                <button md-button color="primary" (click)="createNew()">НОВЫЙ ДОКУМЕНТ</button>
             </div>
         </div>
     </div>
@@ -28,22 +28,17 @@
 
         <div class="col-12 col-sm-5 col-md-4 col-lg-3 mar-b-24-phone">
             <div class="calendar-sidebar mar-t-24 mar-l-64-phone">
-                    <div><a routerLink="/calendar" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Всё подряд</a></div>
-                    <div *ngFor="let tags of TagsList"><a routerLink="/calendar/tag/{{tags.slug}}" routerLinkActive="active">{{tags.title}}</a></div>
+                    <div><a routerLink="/pages" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Всё подряд</a></div>
+                    <div *ngFor="let tags of TagsList"><a routerLink="/pages/tag/{{tags.slug}}" routerLinkActive="active">{{tags.title}}</a></div>
             </div>
         </div>
 
         <div class="col-12 col-sm-7 col-md-8 col-lg-9">
             <div class="row">
 
-                <a class="col-12 col-sm-12 col-md-6 col-lg-4 caledar-list-card" *ngFor="let rendered of DocumentRendered" routerLink="/calendar/item/{{rendered.slug}}">
+                <a class="col-12 col-sm-12 col-md-6 col-lg-4 caledar-list-card" *ngFor="let rendered of DocumentRendered" routerLink="/pages/item/{{rendered.slug}}">
                     <div class="flex-left-center">
                         <h3 class="list-title">{{rendered.title}}</h3>
-                    </div>
-                    <div class="caledar-list-card--tags">
-                        <div *ngFor="let tag of rendered.tags_id" class="caledar-list-card--tags-elem">
-                            <span *ngIf="tag">{{tag.title}}</span>
-                        </div>
                     </div>
                 </a>  
 
