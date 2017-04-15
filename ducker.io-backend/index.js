@@ -127,12 +127,55 @@ app.post('/calendar/new', function(req, res) {
 
         // console.log('OUTPUT: ' + toSlug);	
 
-		db.all("INSERT INTO `calendar_list`(`date`,`title`,`slug`,`content`,`tags_id`) VALUES ('" + currentDate.getTime() + "','" + title + "','" + toSlug + "','','');",
+		db.all("INSERT INTO `calendar_list`(`date`,`title`,`slug`,`content`,`tags_id`) VALUES ('" + currentDate.getTime() + "','" + title + "','" + toSlug + "','','')",
 			function(e,r) {
 				console.log('{!} INSERT IN DB `calendar_list`');
 				exit = updateDataBase();
 			});
 		res.json(toSlug);
+});
+
+app.post('/calendar/item/:slug/remove', function(req, res) {
+	
+	var action = req.body.action;
+	var slug = req.params.slug;
+
+	if(action) {
+
+		db.all("DELETE FROM `calendar_list` WHERE `slug`='" + slug + "';",
+			function(e,r) {
+				_CalendarItems = null;
+				setCalendarItems();
+		});
+
+		res.json('DELETED');
+
+	} else res.json('NO');
+
+});
+
+app.post('/calendar/item/updateTags', function(req, res) {
+	
+	var id = req.body.target_id;
+	var tags_id = req.body.tags_id;
+
+	console.log('id: ' + id + ' / tags_id: ' + tags_id[0]['title']);
+
+	if(id) {
+
+		let go = findTagIdByTitle(tags_id[0]['title']);
+
+		
+		db.all("UPDATE `calendar_list` SET `tags_id`='" + go + "' WHERE `id`='" + id + "'",
+			function(e,r) {
+				_CalendarItems = null;
+				setCalendarItems();
+		}); 
+
+		res.json('UPDATED TAGS');
+
+	} else res.json('NO UPDATED TAGS');
+
 });
 
 // RUN SERVER & DB IMPORT
@@ -206,6 +249,17 @@ function findTagByID(id) {
 
 	return exit;
 }
+
+function findTagIdByTitle(title) {
+	var exit;
+	
+	_CalendarTaglist.forEach(function(element, index) {
+		if(element['title'] == title) exit = element['id'];
+	});
+
+	return exit;
+}
+
 
 function findCalendarItemsByTagId(_slug) {
 	var _exit = [];

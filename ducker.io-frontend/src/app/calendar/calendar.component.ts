@@ -3,7 +3,7 @@ import {
   OnInit,
   AfterViewInit,
 } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AppState } from '../app.service';
 import { EditorDirective } from '../parts/tinymce.directive';
 import { MdSnackBar } from '@angular/material';
@@ -29,6 +29,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   constructor(
     public appState: AppState, 
     public route: ActivatedRoute,
+    public _router: Router,
     public snackBar: MdSnackBar,
     public _editta: EditorDirective,
     private dialogsService: DialogsService
@@ -98,10 +99,52 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
   }
 
+  public updateCalendarTag() {
+
+    this.getTinyContent();
+
+    this.appState.updateCalendarTag(this.DocumentId, this.DocumentTags).subscribe(
+      (data) => {
+        this.openSnackBar(data,'ОК');
+    });
+
+  }
+
   public openDialog() {
     this.dialogsService
-      .confirm('Редактировать метки', 'Are you sure you want to do this?', this.GlobalTags, this.DocumentTags)
+      .confirm('Редактировать метки', 'Are you sure you want to do this?', this.GlobalTags, this.DocumentTags, this.DocumentTitle)
       .subscribe(res => console.log('R R R ESU: ' + res));
+  }
+
+  public removeCalendarItem() {
+    let slug = this.slug;
+    this.appState.removeCalendarItem(slug).subscribe(
+      (data) => {
+        this.openSnackBar(data, 'OK');
+    });
+        let rut = this._router;
+        
+        setTimeout(function() {
+          
+          rut.navigate(['calendar']);
+        }, 400);
+
+  }
+
+  public setDocumentTag(_slug, _title) {
+    console.log('_slug: ' + _slug);
+    console.log('_title: ' + _title);
+    this.DocumentTags = [{
+      slug: _slug,
+      title: _title
+    }]
+
+    this.appState.updateCalendarTag(this.DocumentId, this.DocumentTags).subscribe(
+      (data) => {
+        console.log('>>> DOCUMENT TAGS: ' + JSON.stringify(this.DocumentTags));
+        console.debug('SUBSCRIBE: >>> ' + data);
+    });
+
   }
 
 

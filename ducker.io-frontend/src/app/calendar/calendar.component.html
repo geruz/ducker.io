@@ -1,29 +1,27 @@
 <div class="subheader mar-b-24">
     <div class="container">
         <div class="row flex-left-center">
-            <div class="col-7 col-md-3 col-sm-4 col-lg-3">
+            <div class="col-7 col-sm-8 col-md-9 col-lg-10">
                 <div class="flex-left-center">
 
-					<div class="mar-r-16">
-						<button routerLink="/calendar" md-mini-fab class="fab-clear fab-gray" [mdMenuTriggerFor]="mainmenu" title="Управление днями">
-						<md-icon>arrow_back</md-icon>
+					<div class="mar-r-16 mar-t-3">
+						<button routerLink="/calendar" md-mini-fab class="fab-clear fab-gray" title="Назад в календарь">
+						<md-icon>date_range</md-icon>
 						</button>
 					</div>
 
                     <h2>{{ DocumentTitle }}</h2>
-					
+                    
                 </div>
             </div>
-			
-            <div class="col-4 col-md-5 col-sm-4 mobile-hidden">
-                <div class="h-tags flex-left-center">
+		
+            <div class="col-5 col-sm-4 col-md-3 col-lg-2 editor flex-right-center">
+                <div>
+                    <button md-mini-fab class="fab-clear fab-gray" (click)="openDialog()" title="Редактировать метки"><md-icon>settings</md-icon></button>
                 </div>
-            </div>
-            <div class="col-5 col-md-4 col-sm-4 editor flex-right-center">
-							<button md-mini-fab class="fab-clear fab-gray" [mdMenuTriggerFor]="mainmenu" title="Управление днями"><md-icon>more_vertical</md-icon></button>
-							<md-menu #mainmenu="mdMenu" positionY="'above'">
-								<button md-menu-item (click)="createNew()">Новый день</button>
-							</md-menu>
+                <div class="mar-l-24">
+                    <button md-mini-fab class="fab-clear fab-gray mar-l-24" (click)="removeCalendarItem()" title="Удалить"><md-icon>delete</md-icon></button>
+                </div>
             </div>
         </div>
     </div>
@@ -37,20 +35,17 @@
         <div class="col-12 col-sm-9">
 
             
-            <div class="flex-left-wrapped h-tags color-gray-b8 mar-b-24 mar-b-0-phone">
+            <div class="flex-left-wrapped h-tags color-gray-b8 mar-b-24 mar-b-24-phone">
 
-                <div class="text-center-phone div-full-phone" *ngIf="DocumentTags != ''">
+                <div class="mar-l-16-phone div-full-phone" *ngIf="DocumentTags != ''">
                     <a *ngFor='let tagElem of DocumentTags' routerLink="/calendar/tag/{{tagElem.slug}}">{{tagElem.title}}</a>
                 </div>
 
-                <div class="flex-left-center text-center-phone div-full-phone mar-l-16 mar-l-0-phone">
-                    <button md-mini-fab class="fab-clear" [mdMenuTriggerFor]="menu" title="Метки календаря"><md-icon>more_horiz</md-icon></button>
+                <div class="flex-left-center text-center-phone div-full-phone mar-l-8 mar-l-8-phone mar-t-16-phone">
+                    <button md-mini-fab class="fab-clear" [mdMenuTriggerFor]="menu" title="Метки календаря"><md-icon>expand_more</md-icon></button>
                     <md-menu #menu="mdMenu">
-                        <button md-menu-item *ngFor="let tagListElem of GlobalTags" routerLink="/calendar/tag/{{tagListElem.slug}}">{{tagListElem.title}}</button>
+                        <button md-menu-item *ngFor="let tagListElem of GlobalTags" (click)="setDocumentTag(tagListElem.slug, tagListElem.title)">{{tagListElem.title}}</button>
                     </md-menu>
-                    <div class="mar-l-24">
-                        <button md-mini-fab class="fab-clear" (click)="openDialog()" title="Редактировать метки"><md-icon>space_bar</md-icon></button>
-                    </div>
                 </div>
 
             </div>

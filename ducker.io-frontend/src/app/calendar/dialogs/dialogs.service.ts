@@ -8,7 +8,7 @@ export class DialogsService {
 
     constructor(private dialog: MdDialog) { }
 
-    public confirm(title: string, message: any, tags: any, docTags: any): Observable<boolean> {
+    public confirm(title: string, message: any, tags: any, docTags: any, docTitle: string): Observable<boolean> {
 
         let dialogRef: MdDialogRef<ConfirmDialog>;
 
@@ -18,6 +18,7 @@ export class DialogsService {
         dialogRef.componentInstance.message = message;
         dialogRef.componentInstance.GlobalTags = tags;
         dialogRef.componentInstance.DocumentTags = docTags;
+        dialogRef.componentInstance.DocumentTitle = docTitle;
 
         return dialogRef.afterClosed();
     }

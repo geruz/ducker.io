@@ -99,7 +99,6 @@ body {
 
 .toolbar-links a.activated {
   color: $yellow;
-  cursor: default;
 }
 
 .subheader {
@@ -222,6 +221,7 @@ a.logo {
   padding-left: 56px;
 }*/
 .content .h-tags a {
+  font-weight: 500;
   margin-right: 22px;
   white-space: nowrap;
 }
@@ -294,7 +294,7 @@ a.logo {
 .mat-mini-fab.fab-gray {
   box-shadow: none !important;
   background-color: transparent;
-  color: $gray-54;
+  color: $gray-32;
 }
 
 .mat-mini-fab.fab-clear:hover,.mat-mini-fab.fab-gray:hover {
@@ -394,10 +394,10 @@ a.logo {
 
   .caledar-list-card {
     box-shadow: none !important;
-    // border: 1px solid $gray-4;
+    border: 1px solid $gray-4;
     margin-right: -1px;
     padding: 24px 24px !important;
-    height: 192px;
+    min-height: 92px;
     -webkit-transition: all .3s;
     transition: all .2s;
     cursor: pointer;
@@ -452,38 +452,28 @@ a.logo {
 }
 
 .calendar-sidebar {
-  width: 85%;
-  margin-left: auto;
+
 }
 
-.calendar-sidebar .mat-list-item-content {
-  height: 40px !important;
-}
-
-.calendar-sidebar .mat-nav-list {
-  padding-top: 0;
-}
-
-.calendar-sidebar a.mat-list-item .mat-list-item-content {
-  font-size: 14px !important;
+.calendar-sidebar a {
+  display: block;
   line-height: 24px;
+  font-size: 14px;
+  margin-bottom: 16px;
   color: $gray-54;
 }
-.calendar-sidebar a.mat-list-item.active .mat-list-item-content {
-  background: #fff;
-  
-  color: $gray-85;
-  font-weight: 500;
-}
-.calendar-sidebar a.mat-list-item.active .mat-list-item-content:hover {
-  background: #fff;
+
+.calendar-sidebar a:hover {
+  color: $blue;
 }
 
-.calendar-sidebar a.mat-list-item .mat-list-item-content:hover {
-  background-color: #fff;
-  color: $green-dark;
+.calendar-sidebar a.active {
+  color: $blue;
+  border-left: 2px solid $blue;
+  padding-left: 12px;
   font-weight: 500;
 }
+
 .calendar-sidebar h1 {
   font-size: 11px;
   line-height: 42px;
@@ -503,8 +493,12 @@ a.logo {
   font-size: 13px;
 }
 
-.mar-t--1 {
-  margin-top: -1px;
+.mar-t-3 {
+  margin-top: 3px;
+}
+
+.mar-t-4 {
+  margin-top: 4px;
 }
 
 .gray-button {
@@ -574,4 +568,25 @@ a.logo {
     font-size: 14px;
     line-height: 40px;
     height: 40px;
+}
+
+@media (max-width:576px) {
+  .subheader h2 {
+    font-size: 18px;
+    line-height: 20px;
+  }
+}
+
+@media (max-width:340px) {
+  .subheader h2 {
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 500;
+  }
+}
+
+@media (min-width:768px) {
+  .tablet-hidden {
+    display: none;
+  }
 }

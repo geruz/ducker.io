@@ -1,11 +1,19 @@
 
     <div class="tagEditor">
-            <h3 class="mar-b-16">Метки</h3>
+            <h3 class="mar-b-24">Редактировать</h3>
+            <!--
+            <div class="small">Название</div>
+            <md-input-container class="mar-b-16">
+                <input mdInput [(ngModel)]="DocumentTitle" name="DocumentTitle" value="{{DocumentTitle}}">
+            </md-input-container>
+            -->
+
+            <div class="small mar-b-16">Метки</div>
             <div *ngIf="DocumentTags[0]" class="mar-b-24">
 
                 <div class="tagElement flex-center-justify" *ngFor="let tag of DocumentTags">
                     <div class="tagElementTitle" *ngIf="tag">{{tag.title}}</div>
-                    <div><button md-mini-fab class="fab-clear fab-small"><md-icon class="fonts-small">close</md-icon></button></div>
+                    <div><button md-mini-fab class="fab-clear fab-small" (click)="deleteMsg(tag.title)"><md-icon class="fonts-small">close</md-icon></button></div>
                 </div>
 
             </div>

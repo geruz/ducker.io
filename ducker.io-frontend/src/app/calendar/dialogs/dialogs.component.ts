@@ -18,6 +18,7 @@ export class ConfirmDialog implements OnInit {
     public message: string;
     public GlobalTags: any;
     public DocumentTags: any;
+    public DocumentTitle: string;
 
     public stateCtrl: FormControl;
     public filteredStates: any;
@@ -27,6 +28,8 @@ export class ConfirmDialog implements OnInit {
     public tagsForm: any;
 
     public test = '';
+
+    public sizeOfArray: any;
 
 
 
@@ -73,7 +76,7 @@ export class ConfirmDialog implements OnInit {
                 if(elem['title'] !== element['title']) temp.push(element['title']);
                 else console.log('!!! NOT'); 
             });
-            } else temp.push(element['title']);
+            } else temp.push(element['title']); 
         });
 
         console.log('AFTER PUSHED: ' + JSON.stringify(temp));
@@ -87,22 +90,41 @@ export class ConfirmDialog implements OnInit {
     } 
 
     public onSubmit(state) {   
-        console.log('SUBMIT FORM: ' + state);
         if(this.DocumentTags) console.debug('TRUE');
-        else console.debug('FALSE');
-        this.DocumentTags.push({
-            slug: 'sdasdas',
-            title: 'Новая залупа'
-        })
-        // this.test = '';
-    }       
+
+        let _slug = this.getTagSlugByTitle(state);
+        console.log('_slug: ' + _slug);
+
+
+
+    }
+
+public deleteMsg(msg) {
+    console.log('msg: ' + msg);
+    console.log('dT: ' + JSON.stringify(this.DocumentTags));
+    let index = this.DocumentTags.indexOf(msg);
+    console.log('INDE: ' + index);
+    if (index !== -1) {
+        this.DocumentTags.splice(index, 1);
+    }        
+}
 
     public onClear() {
         this.test = '';
     }
 
+    public getTagSlugByTitle(title: string) {
+        console.log('title: ' + title + ' / globalTags: ' + this.GlobalTags);
+        let exit = [];
+        this.GlobalTags.forEach(function(element, index) {
+            if(title == element['title']) exit = element['slug'];
+        });
+        return exit;
+        //console.log('EXIT: ' + exit);
+    }
 
 }
+
 
 import {NgControl} from "@angular/forms";
 import {Directive, ElementRef, HostListener} from "@angular/core";

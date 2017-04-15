@@ -50,12 +50,13 @@ export class AppState {
 
 
   public updateCalendarItem(id, content, slug) {
+
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
     let params = {
       target_id: id,
-      content: content
+      content: content,
     }
 
     console.debug('CONTENT SLUG: ' + slug);
@@ -64,9 +65,29 @@ export class AppState {
 
   }
 
+
+  public updateCalendarTag(id, tags) {
+
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    let params = {
+      target_id: id,
+      tags_id: tags,
+    }
+    
+
+    console.debug('CONTENT PARAMS: ' + JSON.stringify(params));
+
+    return this.http.post(this._api + '/calendar/item/updateTags', params, {headers: headers}).map((res)=>res.json());    
+
+  }
+
+
+
   public createCalendarItem() {
     
-     let headers = new Headers();
+    let headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
     let params = {
@@ -74,11 +95,22 @@ export class AppState {
       content: '1'
     }
 
-
     return this.http.post(this._api + '/calendar/new', params, {headers: headers}).map((res)=>res.json());    
    
   }
 
+  public removeCalendarItem(slug) {
+    
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    let params = {
+      action: true,
+    }
+
+    return this.http.post(this._api + '/calendar/item/' + slug + '/remove', params, {headers: headers}).map((res)=>res.json());    
+   
+  }
 
 
 }

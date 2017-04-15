@@ -78,9 +78,14 @@ export class CalendarIndexComponent implements OnInit {
         this.updateDocumentRender();
         slug_created = data;
         console.log('Subscribe by CREATE NEW () ' + slug_created);   
-
-       this._router.navigate(['/calendar/item/', slug_created]);
+        this.openSnackBar('Запись создана', 'ОК');
     });
+
+    let rut = this._router;
+
+    setTimeout(function() {
+      rut.navigate(['/calendar/item/', slug_created]);
+    }, 400);    
 
 
   }
