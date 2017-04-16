@@ -21,6 +21,8 @@ var _CalendarTaglist;
 
 var _PagesItems;
 
+var _PagesViewGrid;
+
 app.use(allowCrossDomain);
 app.use(bodyParser.json());
 
@@ -63,6 +65,12 @@ app.get('/calendar/tag/:slug', function (req, res) {
 	exit = jmespath.search(_CalendarItems, "[?tags_id[?slug==`"+slug+"`]]");
 
 	res.json(exit);
+
+});
+
+app.get('/settings/pages/viewgrid', function (req, res) {
+
+	res.json(_PagesViewGrid);
 
 });
 
@@ -204,15 +212,36 @@ app.post('/pages/item/:slug/update', function(req, res) {
 	var content = req.body.content;
 	var slug = req.params.slug;
 
-	db.all("UPDATE `pages_list` SET `content`='" + content + "' WHERE `id`='" + id + "'",
+	var date_lastedit = new Date();
+	date_lastedit = date_lastedit.getTime();
+
+	db.all("UPDATE `pages_list` SET `content`='" + content + "',`date_lastedit`='"+ date_lastedit +"' WHERE `slug`='" + slug + "'",
 		function(e,r) {
-			console.log('>> R: ' + r);
-			console.log('>> E: ' + e);
 			_PagesItems = null;
 			setPagesItems();
+			console.log('UPDATE `pages_list`' + ' content: ' + content + ' / slug: ' + slug);
 	});
 
 	res.json('Запись обновлена');
+});
+
+app.post('/pages/item/:slug/remove', function(req, res) {
+	
+	var action = req.body.action;
+	var slug = req.params.slug;
+
+	if(action) {
+
+		db.all("DELETE FROM `pages_list` WHERE `slug`='" + slug + "';",
+			function(e,r) {
+				_PagesItems = null;
+				setPagesItems();
+		});
+
+		res.json('DELETED');
+
+	} else res.json('NO');
+
 });
 
 app.post('/pages/item/updateTags', function(req, res) {
@@ -239,6 +268,38 @@ app.post('/pages/item/updateTags', function(req, res) {
 
 });
 
+app.get('/pages/tag/:slug', function (req, res) {
+
+	// [?tags_id[?slug==`statistic`]]
+
+	var slug = req.params.slug;
+	var exit;
+
+	exit = jmespath.search(_PagesItems, "[?tags_id[?slug==`"+slug+"`]]");
+
+	res.json(exit);
+
+});
+
+app.post('/pages/new', function(req, res) {
+
+		var title = req.body.title;
+		var toSlug = req.body.toSlug;
+
+		console.log('toSlug: ' + toSlug + ' / title: ' + title);
+
+        let currentDate = new Date();
+		currentDate = currentDate.getTime();
+		
+		db.all("INSERT INTO `pages_list`(`date_created`,`date_lastedit`,`title`,`slug`,`content`,`tags_id`) VALUES ('" + currentDate + "','" + currentDate + "','" + title + "','" + toSlug + "','','')",
+			function(e,r) {
+				console.log('{!} INSERT IN DB `pages_list`');
+				console.log('ERROR: ' + e);
+				exit = updateDataBase();
+			});
+			
+		res.json(toSlug);
+});
 
 // RUN SERVER & DB IMPORT
 
@@ -250,6 +311,7 @@ app.listen(4200, function () {
 	setCalendarTagsList();
 	setCalendarItems();
 	setPagesItems();
+	getPagesViewGrid();
 
 });
 
@@ -279,7 +341,7 @@ function setCalendarItems() {
 					});	
 									
 					
-					console.log('[! DB -> CACHE] >> CALENDAR LIST  t: `calendar_list`');
+					console.log('[! DB -> CACHE] >> CALENDAR LIST  — `calendar_list`');
 		});			
 	} else {
 		console.log('BY CACHE / CALENTAR LIST >>    SELECT <ALL> FROM `calendar_list` ORDER BY `id`');
@@ -293,7 +355,7 @@ function setCalendarTagsList() {
 		db.all("SELECT * FROM `calendar_tags` ORDER BY `id`", 
 		function(e,r) {
 			_CalendarTaglist = r;
-			console.log('[! DB -> CACHE] >> CALENDAR TAGS  t: `calendar_tags`');
+			console.log('[! DB -> CACHE] >> CALENDAR TAGS  — `calendar_tags`');
 		});	
 	} else {
 		console.log('BY CACHE / CALENDAR TAGS >>   SELECT <ALL> FROM `calendar_tags` ORDER BY `id`');
@@ -337,12 +399,12 @@ function findCalendarItemsByTagId(_slug) {
 function setPagesItems() {
 
 	if(!_PagesItems) {
-		db.all("SELECT * FROM `calendar_list` ORDER BY `id`", 
+		db.all("SELECT * FROM `pages_list` ORDER BY `date_lastedit` DESC", 
 			function(e,r) {
 
 					_PagesItems = r;
 
-					console.log('R: ' + JSON.stringify(_PagesItems));
+					// console.log('R: ' + JSON.stringify(_PagesItems));
 					
 					_PagesItems.forEach(function(element, index) {
 						var _TEMP = [];
@@ -354,9 +416,10 @@ function setPagesItems() {
 						// console.log('TAGS:ID: ' + JSON.stringify(_TEMP));
 						element['tags_id'] = _TEMP;
 					});	
+					// console.log('R AFTER: ' + JSON.stringify(_PagesItems));
 									
 					
-					console.log('[! DB -> CACHE] >> CALENDAR LIST  t: `calendar_list`');
+					console.log('[! DB -> CACHE] >> PAGE LIST  — `page_list`');
 		});			
 	} else {
 		console.log('BY CACHE / CALENTAR LIST >>    SELECT <ALL> FROM `calendar_list` ORDER BY `id`');
@@ -385,5 +448,38 @@ function updateDataBase() {
 					
 					console.log('[!] [UPDATE: DB -> CACHE] >> CALENDAR LIST  t: `calendar_list`');
 		});	
+		db.all("SELECT * FROM `pages_list` ORDER BY `id`", 
+			function(e,r) {
+
+					_PagesItems = r;
+					
+					_PagesItems.forEach(function(element, index) {
+						var _TEMP = [];
+
+						element['tags_id'] = element['tags_id'].split(',');
+						element['tags_id'].forEach(function(elem, ind) {
+							_TEMP[ind] = findTagByID(elem);							
+						});
+						// console.log('TAGS:ID: ' + JSON.stringify(_TEMP));
+						element['tags_id'] = _TEMP;
+					});	
+									
+					
+					console.log('[!] [UPDATE: DB -> CACHE] >> PAGES LIST  t: `pages_list`');
+		});	
 }
 
+function getPagesViewGrid() {
+
+	if(!_PagesViewGrid) {
+		db.all("SELECT `PagesGridView` FROM `user_settings`", 
+		function(e,r) {
+			_PagesViewGrid = r[0]['PagesGridView'];
+			console.log('PAGE VIEW: ' + _PagesViewGrid);
+			console.log('[! DB -> CACHE] >> PAGE VIEW GRID  — `user_settings`');
+		});	
+	} else {
+		console.log('BY CACHE / PAGE VIEW GRID >>   SELECT `PageGridView` FROM `user_settings`');
+	}
+
+}

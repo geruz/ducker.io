@@ -1,0 +1,22 @@
+
+    <div class="tagEditor">
+
+            <form #tagsForm="ngForm">
+
+                <div class="small">Название</div>
+                <md-input-container>
+                    <input mdInput autofocus [(ngModel)]="createTitle" name="createTitle" [value]="createTitle" required>
+                </md-input-container>
+
+                <div class="small mar-t-8">Ссылка</div>
+                <md-input-container>
+                    <input mdInput [(ngModel)]="createSlug" name="createSlug" [value]="createSlug" required>
+                </md-input-container>
+
+                <div class="mar-t-16 text-right">
+                    <button md-button md-dialog-close (click)="onSubmit()">СОЗДАТЬ</button>
+                </div>
+            </form>
+            
+
+    </div>

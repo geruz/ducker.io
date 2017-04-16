@@ -9,6 +9,8 @@ import { PagesControllerService } from '../shared/pages-controller.service';
 import { EditorDirective } from '../parts/tinymce.directive';
 import { MdSnackBar } from '@angular/material';
 
+
+
 import 'rxjs/add/operator/filter';
 
 @Component({
@@ -56,7 +58,7 @@ export class PagesComponent implements OnInit {
         // console.debug('DOCUMENT: ' + JSON.stringify(data));
           this.DocumentTitle = data[0]['title'];
           this.DocumentContent = data[0]['content'];
-          // this.DocumentTags = data[0]['tags_id'];
+          this.DocumentTags = data[0]['tags_id'];
           this.DocumentId = data[0]['id'];
           this.setTinyContent(data[0]['content']);
     });
@@ -105,6 +107,8 @@ export class PagesComponent implements OnInit {
 
   public updatePagesItem() {
 
+    this.getTinyContent();
+
     this.PagesClass.updatePagesItem(this.DocumentId, this.DocumentContent, this.slug).subscribe(
       (data) => {
         this.openSnackBar(data,'ОК');
@@ -121,6 +125,19 @@ export class PagesComponent implements OnInit {
 
   }
 
+  public removePagesItem() {
+    let slug = this.slug;
+    this.PagesClass.removePagesItem(slug).subscribe(
+      (data) => {
+        this.openSnackBar(data, 'OK');
+    });
+        let rut = this._router;
+        
+        setTimeout(function() {
+          
+          rut.navigate(['pages']);
+        }, 400);
 
+  }
 
 }

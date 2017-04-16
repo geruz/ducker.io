@@ -19,7 +19,7 @@ export const ROUTES: Routes = [
   ]}, 
   { path: 'pages', children: [
     { path: '', component: PagesIndexComponent },
-    // { path: 'tag/:slug', component: CalendarIndexComponent },
+     { path: 'tag/:slug', component: PagesIndexComponent },
      { path: 'item/:slug', component: PagesComponent }
   ]}, 
   { path: 'links', loadChildren: './+links#LinksModule'},

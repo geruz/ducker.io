@@ -60,4 +60,39 @@ export class PagesControllerService {
 
   }
 
+  public getPageTagItems(slug: string) {
+    return this.http.get(this._api + '/pages/tag/' + slug).map((res)=>res.json());
+  }
+
+  public removePagesItem(slug) {
+    
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    let params = {
+      action: true,
+    }
+
+    return this.http.post(this._api + '/pages/item/' + slug + '/remove', params, {headers: headers}).map((res)=>res.json());    
+   
+  }
+
+  public createPagesItem(title: string, slug: string) {
+    
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    let params = {
+      title: title,
+      toSlug: slug
+    }
+
+    return this.http.post(this._api + '/pages/new', params, {headers: headers}).map((res)=>res.json());    
+   
+  }     
+
+  public getPagesViewGridSettings() {
+    return this.http.get(this._api + '/settings/pages/viewgrid').map((res)=>res.json());
+  } 
+
 }

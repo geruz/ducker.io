@@ -1,4 +1,4 @@
-<div class="subheader mar-b-24">
+<div class="subheader">
     <div class="container">
         <div class="row flex-left-center">
             <div class="col-7 col-sm-8 col-md-9 col-lg-10">
@@ -17,15 +17,15 @@
 		
             <div class="col-5 col-sm-4 col-md-3 col-lg-2 editor flex-right-center">
                 <div>
-                    <button md-mini-fab class="fab-clear fab-gray mar-l-24" (click)="removeCalendarItem()" title="Удалить"><md-icon>delete</md-icon></button>
+                    <button md-mini-fab class="fab-clear fab-gray mar-l-24" (click)="removePagesItem()" title="Удалить"><md-icon>delete</md-icon></button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-
- <div class="container content mar-t-24 mar-t-16-phone">
+<div class="app-upcontainer"> 
+ <div class="container content mar-t-16-phone">
 
     <div class="row">
 
@@ -35,7 +35,7 @@
             <div class="flex-left-wrapped h-tags color-gray-b8 mar-b-24 mar-b-24-phone">
 
                 <div class="mar-l-16-phone div-full-phone" *ngIf="DocumentTags != ''">
-                    <a *ngFor='let tagElem of DocumentTags' routerLink="/calendar/tag/{{tagElem.slug}}">{{tagElem.title}}</a>
+                    <a *ngFor='let tagElem of DocumentTags' routerLink="/pages/tag/{{tagElem.slug}}">{{tagElem.title}}</a>
                 </div>
 
                 <div class="flex-left-center text-center-phone div-full-phone mar-l-8 mar-l-8-phone mar-t-16-phone">
@@ -64,3 +64,4 @@
 		 </div>
 	 </div>
  </div>
+</div>

@@ -5,16 +5,27 @@ import { AppState } from '../../app.service';
 import { PagesControllerService } from '../../shared/pages-controller.service';
 import { MdSnackBar } from '@angular/material';
 
+import { PagesDialogsService } from '../dialogs/dialogs.service';
+
+import { OrderByPipe } from '../../parts/orderBy.pipes';
+
 @Component({
   selector: "pages-index",
   templateUrl: "./pages-index.component.html",
+  providers: [ OrderByPipe ],
 })
 
 export class PagesIndexComponent implements OnInit {
 
   public DocumentTitle = 'Страницы';
   public DocumentRendered: any;
+  public DocumentTags: any;
   public TagsList: any;
+
+  public createTitle: string;
+  public createSlug: string;
+
+  public PagesGridView = 'one';
   
   constructor(
     public appState: AppState, 
@@ -22,11 +33,18 @@ export class PagesIndexComponent implements OnInit {
     public snackBar: MdSnackBar,
     public route: ActivatedRoute,
     public _router: Router,    
+    public pagesDialog: PagesDialogsService
   ) { 
 
   }
 
   public ngOnInit() {
+
+    this.PagesClass.getPagesViewGridSettings().subscribe(
+      (data) => {
+        this.PagesGridView = data;
+        console.log('PagesGridView: ' + data);
+    });
 
     this.appState.getCalendarTagList().subscribe(
       (data) => {
@@ -38,10 +56,26 @@ export class PagesIndexComponent implements OnInit {
         this.DocumentRendered = data;
     });
 
+    this.route.params.forEach((params:Params) => {
+
+      let slug = params['slug'];
+      if(slug) {
+
+      this.PagesClass.getPageTagItems(slug).subscribe(
+        (data) => {
+            this.DocumentRendered = data;
+      });
+
+      } else {
+          this.PagesClass.getPagesAll().subscribe(
+            (data) => {
+              this.DocumentRendered = data;
+          });    
+      }
+
+    });    
+
   }
-
-
-
 
   public openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
@@ -49,8 +83,28 @@ export class PagesIndexComponent implements OnInit {
     });
   }  
 
+  public setPageGridView(numb: string) { 
+    this.PagesGridView = numb;
+  }
+
+  public updateDocumentRender() {
+    
+    this.PagesClass.getPagesAll().subscribe(
+      (data) => {
+        console.debug('W: ' + data);
+      });
+  }
+
+  public openDialog() {
+    this.pagesDialog
+      .confirm(this.createTitle, this.createSlug)
+      .subscribe(res => {
 
 
+        this.updateDocumentRender();
+        this.openSnackBar('Документ создан', 'ОК');
+      });
+  }
 
 
 

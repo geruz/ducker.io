@@ -39,11 +39,14 @@ import { PagesControllerService } from './shared/pages-controller.service';
 import { HomeComponent } from './home';
 import { CalendarComponent } from './calendar/calendar.component';
 import { DialogsModule } from './calendar/dialogs/dialogs.module';
+import { PagesDialogsModule } from './pages/dialogs/dialogs.module';
 import { CalendarIndexComponent } from './calendar/calendar-index/calendar-index.component';
 import { PagesIndexComponent } from './pages/pages-index/pages-index.component';
 import { PagesComponent } from './pages/pages.component';
 import { NoContentComponent } from './no-content';
 import { XLargeDirective } from './home/x-large';
+
+import { OrderByPipe } from './parts/orderBy.pipes';
 
 import '../styles/styles.scss';
 import '../styles/bootstrap-grid.css';
@@ -78,6 +81,7 @@ type StoreType = {
     NoContentComponent,
     XLargeDirective,
     HeadToolbarComponent,
+    OrderByPipe,
   ],
   imports: [ // import Angular's modules
     MaterialModule,
@@ -87,6 +91,7 @@ type StoreType = {
     FormsModule,
     HttpModule,
     DialogsModule,
+    PagesDialogsModule,
     RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules }),
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
