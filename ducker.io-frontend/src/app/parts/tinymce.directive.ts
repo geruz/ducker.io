@@ -59,17 +59,16 @@ export class EditorDirective implements AfterViewInit, OnDestroy {
       schema: 'html5',
       resize: false,
       language_url: '/assets/tinymce/ru.js',
-      // content_css: '/styles/bootstrap-grid.min.css',
+      content_css: '/assets/css/tinymce.editor.css',
       skin_url: '/assets/tinymce/skins/zmnv-tiny',      
       plugins: ["advlist autolink link image lists charmap print preview hr anchor pagebreak",
         "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
         "table contextmenu directionality emoticons textcolor paste colorpicker textpattern autoresize"],
       autoresize_bottom_margin: 0,
       autoresize_overflow_padding: 0,
-      autoresize_min_height: 150,
       contextmenu: "link | image media | insertdatetime | searchreplace",
       menubar: false,
-      toolbar1: "undo redo | backcolor styleselect removeformat | bold | unlink | bullist numlist | hr | visualblocks code",
+      toolbar1: "undo redo | backcolor styleselect removeformat | bold | unlink | bullist numlist | mybutton | hr | visualblocks code",
       setup: editor => {
         this.editor = editor;
         editor.addButton('mybutton', {
@@ -77,9 +76,9 @@ export class EditorDirective implements AfterViewInit, OnDestroy {
           text: 'My button',
           icon: false,
           menu: [{
-            text: 'Menu item 1',
+            text: '6x6',
             onclick: function() {
-              editor.insertContent('&nbsp;<strong>Menu item 1 here!</strong>&nbsp;');
+              editor.insertContent('<div class="row"><div class="col-6">&nbsp;</div><div class="col-6">&nbsp;</div></div>');
             }
           }, {
             text: 'Menu item 2',

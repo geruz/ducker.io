@@ -1,3 +1,5 @@
 {
-    "typescript.tsdk": "./node_modules/typescript/lib"
+    "typescript.tsdk": "./node_modules/typescript/lib",
+    "angulardoc.repoId": "d88a4a8c-6109-40a0-81b8-b0dad75f6b40",
+    "angulardoc.lastSync": 0
 }

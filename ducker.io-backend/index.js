@@ -1,11 +1,11 @@
 var express = require('express');
-
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('ducker-io.db');
 
 var jmespath = require('jmespath');
 
 var bodyParser = require('body-parser');
+
 
 var allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');

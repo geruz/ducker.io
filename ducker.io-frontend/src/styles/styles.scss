@@ -104,7 +104,7 @@ pages-index {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
-  height: 400px;
+  min-height: 400px;
   padding-top: 32px;
   -webkit-box-shadow: inset 0px 2px 5px 1px rgba(0,0,0,0.06);
   -moz-box-shadow: inset 0px 2px 5px 1px rgba(0,0,0,0.06);
