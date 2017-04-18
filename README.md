@@ -33,5 +33,5 @@ Work in progres...
 </code></p>
 
 <h2>ducker.io-static</h2>
-<code>npm install</code>
+<code><p>npm install</p></code>
 <code>npm start</code>
