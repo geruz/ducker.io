@@ -1,0 +1,34 @@
+<div class="login-protector">
+<div class="container mar-t-64">
+    <div class="row mar-t-16">
+        <div class="col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-sm-8 offset-sm-2 col-10 offset-1">
+            <div class="text-center"> <img src="assets/img/global-loader.gif" width="154" height="154"/></div>
+            <form #loginForm="ngForm">
+
+                <md-input-container>
+                    <p>Логин</p>
+                    <input mdInput type="text" [(ngModel)]="username" name="username" (ngModelChange)="ValidationName($event)">
+                </md-input-container>
+
+                <div [ngSwitch]="nameStatus">
+                    <p *ngSwitchCase="'true'" class="invalid">ОШИБКА: Только латиница и цифры</p>
+                </div>
+
+                <md-input-container>
+                    <p>Пароль</p>
+                    <input mdInput type="password" [(ngModel)]="userpass" name="userpass">
+                </md-input-container>
+
+                <div [ngSwitch]="sendingStatus">
+                    <div *ngSwitchCase="'404'" class="sendStatus">Пользователь не найден</div>
+                    <div *ngSwitchCase="'false'" class="sendStatus">Пароль не подходит</div>
+                </div>
+
+                <p class="text-center mar-t-16 mar-b-24"><button md-button color="primary" (click)="onSubmit()">ВОЙТИ В DUCKER.IO</button></p>
+
+            </form>
+        </div>
+    </div>
+    <h2></h2>
+</div>
+</div>

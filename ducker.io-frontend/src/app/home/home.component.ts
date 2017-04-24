@@ -7,6 +7,7 @@ import {
 import { AppState } from '../app.service';
 import { Title } from './title';
 import { XLargeDirective } from './x-large';
+import { Router } from '@angular/router';
 
 @Component({
   // The selector is what angular internally uses
@@ -29,7 +30,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
   // TypeScript public modifiers
   constructor(
     public appState: AppState,
-    public title: Title
+    public title: Title,
+    private router: Router
   ) {
 
     this.appState.getCalendarAll().subscribe(
@@ -41,6 +43,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   public ngOnInit() {
     console.log('hello `Home` component');
+
+    localStorage.setItem('test_key', 'data of key test');
+    console.log('local: ' + localStorage.getItem('currentUser'));
     // this.title.getData().subscribe(data => this.data = data);
   }
 
@@ -51,6 +56,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
   public submitState(value: string) {
     console.log('submitState', value);
     this.localState.value = '';
+  }
+
+  public logout() {
+    localStorage.removeItem('currentUser');
+    this.router.navigate(['/login']);
   }
 
 }

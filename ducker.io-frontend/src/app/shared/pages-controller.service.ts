@@ -14,7 +14,7 @@ import 'rxjs/add/operator/catch';
 @Injectable()
 export class PagesControllerService {
 
-  public _api = 'http://192.168.0.147:4200';
+  public _api = 'http://localhost:4200';
 
   constructor(private http: Http) {
     

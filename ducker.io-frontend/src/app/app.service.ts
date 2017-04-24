@@ -14,8 +14,8 @@ export type InternalStateType = {
 
 @Injectable()
 export class AppState {
-  // public _api = 'http://localhost:4200';
-  public _api = 'http://192.168.0.147:4200';
+  public _api = 'http://localhost:4200';
+  // public _api = 'http://192.168.0.147:4200';
 
   public tester = 'none';
 

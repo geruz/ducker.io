@@ -46,6 +46,10 @@ import { PagesComponent } from './pages/pages.component';
 import { NoContentComponent } from './no-content';
 import { XLargeDirective } from './home/x-large';
 
+import { LoginComponent } from './login/login.component';
+import { AuthService } from './shared/auth.service';
+import { AuthGuard } from './_guards/auth.guards';
+
 import { OrderByPipe } from './parts/orderBy.pipes';
 
 import '../styles/styles.scss';
@@ -58,6 +62,8 @@ const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
   AppState,
   PagesControllerService,
+  AuthService,
+  AuthGuard
 ];
 
 type StoreType = {
@@ -81,6 +87,7 @@ type StoreType = {
     NoContentComponent,
     XLargeDirective,
     HeadToolbarComponent,
+    LoginComponent,
     OrderByPipe,
   ],
   imports: [ // import Angular's modules

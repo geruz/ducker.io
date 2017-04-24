@@ -1,6 +1,7 @@
 var express = require('express');
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('ducker-io.db');
+var SHA256 = require("crypto-js/sha256");
 
 var jmespath = require('jmespath');
 
@@ -301,6 +302,51 @@ app.post('/pages/new', function(req, res) {
 		res.json(toSlug);
 });
 
+
+//// AUTH
+
+app.post('/auth/login/:slug', function(req, res) {
+	
+	var action = req.body.action;
+	var username = req.params.slug;
+	var password = req.body.pass;
+
+	if(action) {
+
+		db.all("SELECT * FROM `users_list` WHERE `login` LIKE '"+username+"' ORDER BY `id`", 
+		function(e,r) {
+
+			let size = [];
+			size = r;
+			size = size.length;
+			
+			if(size > 0) {
+				if(r[0]['pass'] == SHA256(password)) {
+					console.log('>>>>>> TRUE'); 
+					let exit = {
+						id: r[0]['id'],
+						name: r[0]['login'],
+						avatar: r[0]['avatar'],
+						role: r[0]['role']
+					}
+					res.json(exit);
+				} else { 
+					console.log('>>>>>> false'); 
+					res.json('false');
+				}				
+			} else {
+				res.json('404');
+			}
+		});
+		
+	} else {
+		res.json('NO');
+	}
+
+});
+
+
+
 // RUN SERVER & DB IMPORT
 
 app.listen(4200, function () {
@@ -317,6 +363,30 @@ app.listen(4200, function () {
 
 
 //// F U N C T I O N S
+
+// >>>>>> A U T H
+
+function authGuard(username, password) {
+	console.log('username: ' + username);
+	console.log('pass: ' + password);
+	console.log('SHA256: ' + SHA256(password));
+	console.log('-----------------');
+
+	let exit;
+	db.all("SELECT * FROM `users_list` WHERE `login` LIKE '"+username+"' ORDER BY `id`", 
+	function(e,r) {
+		console.log('pass from db: ' + r[0]['pass']);
+
+		if(r[0]['pass'] == SHA256(password)) {
+			console.log('>>>>>> TRUE'); 
+			return true;
+		} else { 
+			console.log('>>>>>> false'); 
+			return false;
+		}
+	});
+	
+}
 
 
 // >>>>>> C A L E N D A R
@@ -475,7 +545,7 @@ function getPagesViewGrid() {
 		db.all("SELECT `PagesGridView` FROM `user_settings`", 
 		function(e,r) {
 			_PagesViewGrid = r[0]['PagesGridView'];
-			console.log('PAGE VIEW: ' + _PagesViewGrid);
+			// console.log('PAGE VIEW: ' + _PagesViewGrid);
 			console.log('[! DB -> CACHE] >> PAGE VIEW GRID  — `user_settings`');
 		});	
 	} else {

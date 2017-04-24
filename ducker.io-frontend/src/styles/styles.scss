@@ -707,6 +707,45 @@ a.logo {
   color: $gray-54;
 }
 
+.login-protector {
+  background: #fff;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow-y: scroll;
+}
+
+.invalid {
+    font-size: 11px;
+    font-weight: 500;
+    color: #F44336;
+    background: #FFEBEE;
+    padding: 4px 10px;
+    margin-top: -16px;
+}
+
+.sendStatus {
+    font-size: 14px;
+    font-weight: 500;
+    color: #F44336;
+    background: #FFEBEE;
+    padding: 12px 18px;
+}
+
+@media (min-width: 1276px) {
+  .login-protector {
+    padding-top: 92px;
+  }
+}
+
+@media (max-width: 1275px) {
+  .login-protector {
+    padding-top: 64px;
+  }
+}
+
 @media (max-width:576px) {
   .subheader h2 {
     font-size: 18px;
