@@ -27,6 +27,8 @@ export class PagesComponent implements OnInit {
   public DocumentTags: any;
   public GlobalTags: any;
 
+  public showLoader = true;
+
   public slug: string;
   public DocumentId: any;
 
@@ -61,6 +63,7 @@ export class PagesComponent implements OnInit {
           this.DocumentTags = data[0]['tags_id'];
           this.DocumentId = data[0]['id'];
           this.setTinyContent(data[0]['content']);
+          this.showLoader = false;
     });
 
     // console.debug('CONTENT: ' + + JSON.stringify(this.DocumentContent));
@@ -82,11 +85,10 @@ export class PagesComponent implements OnInit {
   }
 
   public setTinyContent(data) {
-    let exit;
+    let exit; 
     if(data) exit = this._editta.setContent(data);
     else { console.log('DATA IS UNDEFINED'); }
     return exit;
-
   }
 
   public setDocumentTag(_slug, _title) {
@@ -126,6 +128,8 @@ export class PagesComponent implements OnInit {
   }
 
   public removePagesItem() {
+
+    this.showLoader = true;
     let slug = this.slug;
     this.PagesClass.removePagesItem(slug).subscribe(
       (data) => {
@@ -134,7 +138,7 @@ export class PagesComponent implements OnInit {
         let rut = this._router;
         
         setTimeout(function() {
-          
+          this.showLoader = false;
           rut.navigate(['pages']);
         }, 400);
 

@@ -17,11 +17,11 @@ export class LinksComponent implements OnInit {
   private _currentUser: any;
 
   public constructor(public _state: AppState) {
-    this._state.setTitle('Test title');
+    this._state.setTitle('Ссылки');
   }
 
   public ngOnInit() {
-    console.log('Links Loaded');
+    // console.log('Links Loaded');
     this._currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.username = this._currentUser['login'];
     this.avatar = this._currentUser['avatar'];

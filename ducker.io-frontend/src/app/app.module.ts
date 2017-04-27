@@ -14,6 +14,7 @@ import {
 
 import { SharedModule } from './shared/shared.module';
 import { HeadToolbarComponent } from './parts/head-toolbar';
+import { LoaderComponent } from './parts/loader';
 
 import {
   removeNgStyles,
@@ -87,6 +88,7 @@ type StoreType = {
     NoContentComponent,
     XLargeDirective,
     HeadToolbarComponent,
+    LoaderComponent,
     LoginComponent,
     OrderByPipe,
   ],

@@ -45,7 +45,7 @@ export class PagesConfirmDialog implements OnInit {
 
     setTimeout(function() {
       rut.navigate(['/pages/item/', toSlug]);
-    }, 400);    
+    }, 700);    
 
     }
 

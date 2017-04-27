@@ -21,7 +21,7 @@
     </div>
 </div>
 
-<div class="app-upcontainer">    
+<div class="app-upcontainer pad-b-80">    
 <div class="container">
 
     <div class="row">
@@ -53,14 +53,13 @@
                         <md-icon>view_quilt</md-icon>
                     </button>
 
-
-                    <button *ngIf="PagesGridView == 'three'" (click)="setPageGridView('three')" md-mini-fab class="fab-clear active">
-                        <md-icon>view_week</md-icon>
-                    </button>
-
-                    <button *ngIf="PagesGridView !== 'three'" (click)="setPageGridView('three')" md-mini-fab class="fab-clear">
-                        <md-icon>view_week</md-icon>
-                    </button>
+                    <button md-mini-fab class="fab-clear" [mdMenuTriggerFor]="menuSorting" title="Сортировать по..."><md-icon>expand_more</md-icon></button>
+                    <md-menu #menuSorting="mdMenu">
+                        <button md-menu-item (click)="setPageSorting('-id')">Id</button>
+                        <button md-menu-item (click)="setPageSorting('title')">Название</button>
+                        <button md-menu-item (click)="setPageSorting('-date_created')">Дата создания</button>
+                        <button md-menu-item (click)="setPageSorting('-date_lastedit')">Дата изменения</button>
+                    </md-menu>
                     
             </div>
 
@@ -70,12 +69,12 @@
                 <div class="row" *ngSwitchCase="'one'">
 
 
-                    <a class="col-12 col-sm-12 col-md-6 col-lg-12 caledar-list-card" *ngFor="let rendered of DocumentRendered" routerLink="/pages/item/{{rendered.slug}}">
+                    <a class="col-12 col-sm-12 col-md-6 col-lg-12 caledar-list-card" *ngFor="let rendered of DocumentRendered | orderBy : [PagesSorting]" routerLink="/pages/item/{{rendered.slug}}">
                         <div class="flex-left-center">
                             <h3 class="list-title">{{rendered.title}}</h3>
                         </div>
                         <div class="caledar-list-card--tags">
-                            <span class="color-gray-85 mar-r-8">{{ rendered.date_lastedit | date:'d.MM.y — HH:mm' }}</span>                            
+                            <span class="color-gray-85 mar-r-8">Изменен {{ rendered.date_lastedit | date:'d.MM.y — HH:mm' }}</span>                            
                             <span *ngFor="let tag of rendered.tags_id" class="caledar-list-card--tags-elem">
                                 <span *ngIf="tag">{{tag.title}}</span>
                             </span>
@@ -85,7 +84,7 @@
                 </div>
 
                 <div class="row" *ngSwitchCase="'two'">      
-                    <a class="col-12 col-sm-12 col-md-6 col-lg-6 caledar-list-card" *ngFor="let rendered of DocumentRendered" routerLink="/pages/item/{{rendered.slug}}">
+                    <a class="col-12 col-sm-12 col-md-6 col-lg-6 caledar-list-card" *ngFor="let rendered of DocumentRendered | orderBy : [PagesSorting]" routerLink="/pages/item/{{rendered.slug}}">
                         <div class="flex-left-center">
                             <h3 class="list-title">{{rendered.title}}</h3>
                         </div>
@@ -99,7 +98,7 @@
                 </div>
 
                 <div class="row" *ngSwitchCase="'three'">      
-                    <a class="col-12 col-sm-12 col-md-6 col-lg-4 caledar-list-card" *ngFor="let rendered of DocumentRendered" routerLink="/pages/item/{{rendered.slug}}">
+                    <a class="col-12 col-sm-12 col-md-6 col-lg-4 caledar-list-card" *ngFor="let rendered of DocumentRendered | orderBy : [PagesSorting]" routerLink="/pages/item/{{rendered.slug}}">
                         <div class="flex-left-center">
                             <h3 class="list-title">{{rendered.title}}</h3>
                         </div>

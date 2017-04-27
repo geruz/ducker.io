@@ -102,7 +102,7 @@ export class EditorDirective implements AfterViewInit, OnDestroy {
   public setContent(data) {
     setTimeout(function() {
         tinymce.get('html').setContent(data);
-    }, 1000);
+    }, 10);
      return false;
   }
 }

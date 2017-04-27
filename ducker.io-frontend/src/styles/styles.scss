@@ -53,7 +53,6 @@ app {
 }
 
 head-toolbar {
-  height: 54px;
   -webkit-box-flex: 0;
   -webkit-flex: 0 auto;
   -ms-flex: 0 auto;
@@ -78,9 +77,6 @@ pages-index {
   flex: 1;
 }
 
-.subheader {
-  height: 75px;
-}
 
 .container {
   -webkit-box-flex: 1 !important;
@@ -106,9 +102,9 @@ pages-index {
   flex: 1;
   min-height: 400px;
   padding-top: 32px;
-  -webkit-box-shadow: inset 0px 2px 5px 1px rgba(0,0,0,0.06);
-  -moz-box-shadow: inset 0px 2px 5px 1px rgba(0,0,0,0.06);
-  box-shadow: inset 0px 2px 5px 1px rgba(0,0,0,0.06);  
+  -webkit-box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.06); 
+  -moz-box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.06); 
+  box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.06); 
 }
 
 
@@ -140,8 +136,8 @@ pages-index {
   border-radius: 0px;
 }
 ::-webkit-scrollbar-track:hover {
-
 }
+
 ::-webkit-scrollbar-track:active {
   background: #ffffff;
 }
@@ -175,7 +171,7 @@ pages-index {
 
 .toolbar {
   background-color: $toolbar;
-  padding: 12px 0;
+  padding: 8px 0;
   font-size: 14px;
 }
 .toolbar input {
@@ -217,7 +213,11 @@ pages-index {
 
 .subheader {
   background-color: rgba(0,0,0,.012);
-  padding: 16px 0;
+  padding: 8px 0;
+}
+
+.subheader h2 {
+  font-size: 20px;
 }
 
 h1,h2,h3,h4,h5 {
@@ -732,6 +732,37 @@ a.logo {
     color: #F44336;
     background: #FFEBEE;
     padding: 12px 18px;
+}
+
+.toolbar-avatar {
+  width: 24px;
+  height: 24px;
+  overflow: hidden;
+  background: #FFF;
+}
+
+.toolbar-user {
+  color: rgba(255,255,255,.24);
+  cursor: default;
+}
+
+.fab-image {
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: rgba(255,255,255,.25) !important;
+}
+
+.fab-image:hover {
+  background-color: rgba(255,255,255,.04) !important;
+}
+
+.fab-image-inside {
+  width: 24px;
+  height: 24px;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;  
 }
 
 @media (min-width: 1276px) {

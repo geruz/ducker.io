@@ -26,6 +26,7 @@ export class PagesIndexComponent implements OnInit {
   public createSlug: string;
 
   public PagesGridView = 'one';
+  public PagesSorting = '-date_created';
   
   constructor(
     public appState: AppState, 
@@ -106,6 +107,9 @@ export class PagesIndexComponent implements OnInit {
       });
   }
 
+public setPageSorting(value: string) {
+  this.PagesSorting = value;
+}
 
 
 }

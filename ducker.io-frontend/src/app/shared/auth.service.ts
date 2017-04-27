@@ -14,7 +14,7 @@ import 'rxjs/add/operator/catch';
 @Injectable()
 export class AuthService {
 
-  public _api = 'http://localhost:4200';
+  public _api = 'http://192.168.1.39:4200';
 
   constructor(private http: Http) {
     

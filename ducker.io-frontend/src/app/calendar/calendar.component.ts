@@ -52,7 +52,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
           // console.debug('DOCUMENT: ' + JSON.stringify(data));
           this.DocumentTitle = data[0]['title'];
           this.DocumentContent = data[0]['content'];
-          // this.DocumentTags = data[0]['tags_id'];
+          this.DocumentTags = data[0]['tags_id'];
           this.DocumentId = data[0]['id'];
           this.setTinyContent(data[0]['content']);
       });
