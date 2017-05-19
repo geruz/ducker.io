@@ -13,7 +13,7 @@ import {
 } from '@angular/core';
 
 import { SharedModule } from './shared/shared.module';
-
+import { HeadToolbarComponent } from './parts/head-toolbar';
 import { LoaderComponent } from './parts/loader';
 
 import {
@@ -37,17 +37,15 @@ import { AppComponent } from './app.component';
 import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState, InternalStateType } from './app.service';
 import { PagesControllerService } from './shared/pages-controller.service';
-
 import { HomeComponent } from './home';
-import { HomeActionsComponent } from './home/actions/actions.component';
-
-import { ReviewsComponent } from './reviews/reviews.component';
-
+import { CalendarComponent } from './calendar/calendar.component';
+import { DialogsModule } from './calendar/dialogs/dialogs.module';
 import { PagesDialogsModule } from './pages/dialogs/dialogs.module';
+import { CalendarIndexComponent } from './calendar/calendar-index/calendar-index.component';
 import { PagesIndexComponent } from './pages/pages-index/pages-index.component';
 import { PagesComponent } from './pages/pages.component';
 import { NoContentComponent } from './no-content';
-
+import { XLargeDirective } from './home/x-large';
 
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './shared/auth.service';
@@ -55,25 +53,9 @@ import { AuthGuard } from './_guards/auth.guards';
 
 import { OrderByPipe } from './parts/orderBy.pipes';
 
-// Parts
-import { LeftSideComponent } from './parts/left-side/left-side.component';
-import { SearchBarComponent } from './parts/search-bar/search-bar.component';
-
-import { UserbarComponent } from './parts/userbar/userbar.component';
-import { FavoritesComponent } from './parts/userbar/favorites/favorites.component';
-
-import { ButtonDropdownComponent } from './parts/buttons/dropdown/dropdown.component';
-
-
-
 import '../styles/styles.scss';
-
-import '../styles/header.scss';
-
-import '../styles/constructor/bootstrap-grid.css';
-import '../styles/constructor/zmnv-paddings.css';
-
-
+import '../styles/bootstrap-grid.css';
+import '../styles/zmnv-paddings.css';
 
 
 // Application wide providers
@@ -99,26 +81,16 @@ type StoreType = {
   declarations: [ 
     AppComponent,
     HomeComponent,
-    HomeActionsComponent,
-
-    ReviewsComponent,
-
+    CalendarComponent,
+    CalendarIndexComponent,
     PagesIndexComponent,
     PagesComponent,
     NoContentComponent,
-
+    XLargeDirective,
+    HeadToolbarComponent,
     LoaderComponent,
     LoginComponent,
     OrderByPipe,
-
-    // P A R T S
-    LeftSideComponent,
-    SearchBarComponent,
-    ButtonDropdownComponent,
-    
-    UserbarComponent,
-    FavoritesComponent,
-    
   ],
   imports: [ // import Angular's modules
     MaterialModule,
@@ -127,6 +99,7 @@ type StoreType = {
     BrowserAnimationsModule,
     FormsModule,
     HttpModule,
+    DialogsModule,
     PagesDialogsModule,
     RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules }),
   ],

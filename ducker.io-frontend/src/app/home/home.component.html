@@ -1,39 +1,8 @@
+<div class="mar-t-48">
+  <div class="container">
+    <h1>Home</h1>
+    <h2>{{localDataBase | json}}</h2>
 
-        <div class="windowcontainer">
-    
-        <left-side></left-side>
-
-        <div class="side-right">
-            <div class="side-right-full">
-                <div class="flex-center-justify">
-                        <h3>{{ PageTitle }}<div class="mar-b-8 font-14 gray-54">{{ PageSubTitle }}</div></h3>                    
-                        <div class="flex-right-center">
-                        <actions-home></actions-home>
-                        <user-bar></user-bar>
-                        </div>
-                </div>
-
-                <div class="row subtoolbar">
-                    <div class="col-12 flex-left-center">
-                    
-                        <search-bar></search-bar>
-
-                        <button-drop title="Привет" [list]="test"></button-drop>
-
-                    </div>  
-                </div>               
-
-                <hr class="mar-t-16 mar-b-16" />
-            </div>
-            <div class="side-right-col">
-                <div class="side-right-left row">
-                    <div class="col-12">
-                        123
-                    </div>
-                 </div>
-                <div class="side-right-right pad-l-24">
-                    
-                </div>
-            </div>
-        </div>
-    </div>
+    <button md-button (click)="logout()">ВЫЙТИ</button>
+  </div>
+</div>

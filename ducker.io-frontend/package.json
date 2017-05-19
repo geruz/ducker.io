@@ -85,10 +85,7 @@
     "@angularclass/conventions-loader": "^1.0.2",
     "@angularclass/hmr": "~1.2.2",
     "@angularclass/hmr-loader": "~3.0.2",
-    "@types/xlsx": "0.0.34",
     "core-js": "^2.4.1",
-    "csvtojson": "^1.1.5",
-    "exceljs": "^0.4.9",
     "hammerjs": "^2.0.8",
     "http-server": "^0.9.0",
     "ie-shim": "^0.1.0",
@@ -96,7 +93,6 @@
     "reflect-metadata": "^0.1.9",
     "rxjs": "5.0.2",
     "tinymce": "^4.5.6",
-    "ts-xlsx": "0.0.11",
     "typescript": "^2.2.2",
     "zone.js": "0.7.6"
   },
