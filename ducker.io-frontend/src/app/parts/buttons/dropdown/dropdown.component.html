@@ -1,0 +1,7 @@
+<div class="subButtonMenuDropdown">
+<button id="pageTitles" class="subButton triangle mar-l-16">{{ ElementTitle }}
+    <div class="subButtonMenu" *ngIf="ElementList">
+        <div class="element" *ngFor="let element of ElementList">{{element.title}}</div>
+    </div>
+</button> 
+</div>

@@ -6,30 +6,27 @@
         <div class="side-right">
             <div class="side-right-full">
                 <div class="flex-center-justify">
-                        <h3>{{ PageTitle }}<div class="mar-b-8 font-14 gray-54">{{ PageSubTitle }}</div></h3>                    
+                        <h3>{{ PageTitle }}<div class="mar-t-8 mar-b-8 font-14 gray-54">{{ PageSubTitle }}</div></h3>                    
                         <div class="flex-right-center">
                         <actions-home></actions-home>
                         <user-bar></user-bar>
                         </div>
                 </div>
-
-                <div class="row subtoolbar">
-                    <div class="col-12 flex-left-center">
-                    
-                        <search-bar></search-bar>
-
-                        <button-drop title="Привет" [list]="test"></button-drop>
-
-                    </div>  
-                </div>               
+       
 
                 <hr class="mar-t-16 mar-b-16" />
             </div>
             <div class="side-right-col">
                 <div class="side-right-left row">
-                    <div class="col-12">
-                        123
+
+                    <div class="col-12" *ngFor="let element of Reviews">
+                        <div class="review-group mar-b-24">
+                            <div class="review-group--data">{{element.timestamp}}</div>
+                            <div class="review-group--username mar-b-8">{{element.username}}</div>
+                            <div class="review-group--comment">{{element.comment}}</div>
+                        </div>
                     </div>
+
                  </div>
                 <div class="side-right-right pad-l-24">
                     
