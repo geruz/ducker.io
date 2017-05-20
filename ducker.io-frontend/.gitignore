@@ -11,7 +11,7 @@ morgan.log
 /dist/
 /compiled/
 
-# Node #
+# Node  #
 npm-debug.log
 /npm-debug.log.*
 
