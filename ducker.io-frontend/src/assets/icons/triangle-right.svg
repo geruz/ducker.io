@@ -1,0 +1,14 @@
+<svg width="24" height="9" viewBox="0 0 24 9" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<title>Frame 2</title>
+<desc>Created using Figma</desc>
+<g id="Canvas" transform="translate(230 278)">
+ clip-path="url(#clip-0)"<g id="Frame 2">
+<g id="Polygon">
+<use xlink:href="#path0_fill" transform="matrix(-1 1.22465e-16 -1.22465e-16 -1 -219 -269)" fill="#D8D8D8"/>
+</g>
+</g>
+</g>
+<defs>
+<path id="path0_fill" d="M 5.5 0L 10.2631 6.75L 0.73686 6.75L 5.5 0Z"/>
+</defs>
+</svg>

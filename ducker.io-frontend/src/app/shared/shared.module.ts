@@ -1,5 +1,5 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
-import { HeadSubheaderComponent } from '../parts/head-subheader/head-subheader.component';
+
 import { EditorDirective } from '../parts/tinymce.directive';
 // import '../../../node_modules/tinymce/tinymce.js';
 
@@ -13,7 +13,6 @@ const PIPES = [
 
 const COMPONENTS = [
   // put shared components here
-    HeadSubheaderComponent,
     EditorDirective
 ];
 

@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'actions-review',
+    selector: 'actions-home',
     templateUrl: 'actions.component.html',
     styleUrls: ['actions.component.scss']
 })
-export class ReviewActionsComponent {
+export class HomeActionsComponent {
 
 }

@@ -1,0 +1,43 @@
+<div class="userBar" title="Настройки пользователя" (click)="stateSettings(true)">
+    <div class="flex-left-center">
+        <div class="userBar--name mar-r-16">zmnv</div>
+        <div class="userBar--avatar"></div>
+        <button class="icon icon-big prev"><img src="/assets/icons/next.svg" width="24" title="Скрыть"/></button>
+    </div>
+</div>
+
+<div id="userSettings" class="userSettings" [ngStyle]="{'transform': SettingsHidder}">
+
+    <div class="row  pad-24 pad-b-0">
+        <div class="col-9"><h4 class="slideTitle" style="padding-top: 15px">@ zmnv</h4></div>
+        <div class="col-3 text-right">
+            <button (click)="stateSettings(false)" id="closeRightBar" class="icon icon-big next"><img src="/assets/icons/next.svg" width="24" title="Скрыть"/></button>
+        </div>
+    </div>
+    
+
+    <div class="row mar-b-16 userSettings-form pad-24 pad-b-0">
+        <div class="col-4">
+            <div class="userSettings--avatar"></div>
+        </div>
+        <div class="col-8">
+            <div class="userSettings-group">
+                <button class="subButton">Изменить пароль</button>
+                <button class="subButton">Выйти</button>
+            </div>
+        </div>
+    </div>
+    <hr class="mar-b-24" />
+    <div class="pad-24">
+    <h4 class="gray-54 mar-b-24">Избранное</h4>
+
+    <div id="userSettings-fav" class="favorites">
+
+        <user-favorites></user-favorites>
+
+    </div>
+
+    </div>
+
+
+</div>

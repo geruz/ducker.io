@@ -1,0 +1,19 @@
+@import '../../styles/colors';
+
+.review-group { 
+    border-bottom: 1px solid $gray-4;
+    padding: 16px;
+    -webkit-transition: all 80ms ease-in-out;
+    -moz-transition: all 80ms ease-in-out;
+    -ms-transition: all 80ms ease-in-out;    
+}
+
+.review-group:hover {
+    background-color: $light-blue;
+    border-bottom: 1px solid transparent;
+}
+
+.review-group .review-group--data {
+    font-size: 13px;
+    color: $gray-54;
+}
