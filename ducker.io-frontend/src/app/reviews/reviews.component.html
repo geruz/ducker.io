@@ -1,6 +1,6 @@
         <div class="windowcontainer">
     
-        <left-side></left-side>
+        <left-side></left-side> 
 
         <div class="side-right">
             <div class="side-right-full">
@@ -16,21 +16,55 @@
                 <hr class="mar-t-16 mar-b-16" />
             </div>
             <div class="side-right-col">
-                <div class="side-right-left row">
+                <div class="side-right-left row mar-b-64">
 
-                    <div class="col-12" *ngFor="let element of Reviews">
-                        <div class="review-group mar-b-24">
-                            <div class="review-group--data">{{element.timestamp}}</div>
-                            <div class="review-group--username mar-b-8">{{element.username}}</div>
+                    <div class="col-12" *ngIf="!StorageReviews">
+                        <div class="code-area" class="w100">
+                            <h4 class="gray-54 mar-b-16">Отрисовать JSON</h4>
+                            <textarea autofocus title="Вставьте JSON код прямо сюда" class="jsonElement" [(ngModel)]="container" name="container" (ngModelChange)="NormalizeReviewsInside()"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-12" *ngFor="let element of StorageReviews">
+                        <div class="review-group mar-b-24" *ngIf="element.comment"> 
+                            <div class="review-group--username mar-b-8"><a title="Перейти на профиль пользователя {{element.username}}" href="https://au.ru/user/{{element.username}}/" target="_blank">{{element.username}}</a></div>
+                            <div class="review-group--settings mar-b-16">
+                                <div class="answer" title="Если функции не сработали. Отмечайте только те, что вы проверили. «Я не могу это сделать...»">{{element.errors}}</div>
+                            </div>
+                              <div class="review-group--settings mar-b-16">
+                                <div class="answer" title="Каковы ваши общие впечатления о странице">
+                                    <ul>
+                                        <li *ngFor="let feel of element.feelings">
+                                            <span class="warning" *ngIf="feel == 'Информативность ниже ожидаемой'">
+                                            {{feel}}
+                                            </span>                                         
+                                             <span class="cool" *ngIf="feel == 'Информативность выше ожиданий'">
+                                            {{feel}}
+                                            </span>
+                                             <span *ngIf="feel !== 'Информативность ниже ожидаемой' && feel !== 'Информативность выше ожиданий'">
+                                            {{feel}}
+                                            </span>   
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                             <div class="review-group--comment">{{element.comment}}</div>
                         </div>
                     </div>
 
                  </div>
-                <div class="side-right-right pad-l-24">
-                    
+                <div class="side-right-right pad-l-24 mar-r-24">
+                    <button md-button (click)="clearReviews()">Сбросить</button>
+                    <button md-button color="primary">Сохранить</button>
+                    <div class="pad-l-16 mar-t-24">
+                        <div class="mar-b-8">Количество отзывов</div>
+                        <h3>{{StorageSize}}</h3>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     
+    <div *ngIf="showLoading">
+        <sub-loader></sub-loader>
+    </div>

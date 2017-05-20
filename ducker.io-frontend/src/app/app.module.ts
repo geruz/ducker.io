@@ -15,6 +15,7 @@ import {
 import { SharedModule } from './shared/shared.module';
 
 import { LoaderComponent } from './parts/loader';
+import { SubLoaderComponent } from './parts/loader/sub-loader/sub-loader.component';
 
 import {
   removeNgStyles,
@@ -42,6 +43,7 @@ import { HomeComponent } from './home';
 import { HomeActionsComponent } from './home/actions/actions.component';
 
 import { ReviewsComponent } from './reviews/reviews.component';
+import { GetReviewsService } from './reviews/services/getReviews.service';
 
 import { PagesDialogsModule } from './pages/dialogs/dialogs.module';
 import { PagesIndexComponent } from './pages/pages-index/pages-index.component';
@@ -78,7 +80,8 @@ const APP_PROVIDERS = [
   AppState,
   PagesControllerService,
   AuthService,
-  AuthGuard
+  AuthGuard,
+  GetReviewsService
 ];
 
 type StoreType = {
@@ -104,6 +107,8 @@ type StoreType = {
     NoContentComponent,
 
     LoaderComponent,
+    SubLoaderComponent,
+    
     LoginComponent,
     OrderByPipe,
 

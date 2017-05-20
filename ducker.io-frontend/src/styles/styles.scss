@@ -415,3 +415,12 @@ hr {
 #draggable {
   cursor: move;
 }
+
+.mat-input-container {
+  width: 100% !important;
+}
+
+p.invalid {
+  color: $red;
+  font-size: 13px;
+}

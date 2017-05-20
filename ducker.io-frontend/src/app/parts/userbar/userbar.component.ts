@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
+import {ActivatedRoute} from "@angular/router";
+import { Router } from '@angular/router';
+
 @Component({
     selector: 'user-bar',
     templateUrl: 'userbar.component.html',
@@ -8,6 +11,12 @@ import { Component, OnInit } from '@angular/core';
 export class UserbarComponent implements OnInit {
 
     public SettingsHidder = 'translateX(390px)';
+
+    constructor(
+        private _router: Router,
+        private _routeParams: ActivatedRoute
+    ) { }
+
 
     public ngOnInit() {
 
@@ -23,6 +32,14 @@ export class UserbarComponent implements OnInit {
             console.log('CLOSE');
             this.SettingsHidder = 'translateX(390px)';
         }
+    }
+
+    public userLogout() {
+        localStorage.removeItem('currentUser');
+
+        this._router.navigate(['/login']);
+
+
     }
 
 }
