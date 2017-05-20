@@ -11,27 +11,27 @@ Work in progres...
 </p>
 
 <h2>ducker.io-backend</h2>
-<code>npm install</code>
-<code>npm start</code>
+``npm install``
+``npm start``
 
 <h2>ducker.io-frontend</h2>
-<code>npm install</code>
+``npm install``
 
 <p><strong>Then you need to update Angular to 4.0</strong><br/>
 (see: http://angularjs.blogspot.ru/2017/03/angular-400-now-available.html)</p>
 
-<p><code>
+``
     npm install @angular/common@latest @angular/compiler@latest @angular/compiler-cli@latest @angular/core@latest @angular/forms@latest @angular/http@latest @angular/platform-browser@latest @angular/platform-browser-dynamic@latest @angular/platform-server@latest @angular/router@latest @angular/animations@latest typescript@latest --save
-</code></p>
+``
 
 <p><strong>Update Material</strong>
 (see: https://material.angular.io/guide/getting-started)
 </p>
 
-<p><code>
+<p>``
     npm install --save @angular/material
-</code></p>
+``</p>
 
 <h2>ducker.io-static</h2>
-<code><p>npm install</p></code>
-<code>npm start</code>
+``npm install``
+``npm start``
