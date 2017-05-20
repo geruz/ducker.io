@@ -60,6 +60,7 @@ import { OrderByPipe } from './parts/orderBy.pipes';
 
 // Parts
 import { LeftSideComponent } from './parts/left-side/left-side.component';
+import { LeftSideService } from './parts/left-side/left-side.service'; 
 import { SearchBarComponent } from './parts/search-bar/search-bar.component';
 
 import { UserbarComponent } from './parts/userbar/userbar.component';
@@ -81,7 +82,8 @@ const APP_PROVIDERS = [
   PagesControllerService,
   AuthService,
   AuthGuard,
-  GetReviewsService
+  GetReviewsService,
+  LeftSideService
 ];
 
 type StoreType = {

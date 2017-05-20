@@ -5,7 +5,7 @@ import {
 } from '@angular/core';
 
 import { AppState } from '../app.service';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router, Params} from "@angular/router";
 
 import { GetReviewsService } from './services/getReviews.service';
 
@@ -40,12 +40,14 @@ export class ReviewsComponent implements OnInit, AfterViewInit {
 
   constructor(
     private router: Router,
+    private _routeActive: ActivatedRoute,
     private _reviews: GetReviewsService
   ) {
 
   }
 
   public ngOnInit() {
+
     this.NormalizeReviews();
   }
 
@@ -135,6 +137,16 @@ export class ReviewsComponent implements OnInit, AfterViewInit {
 
   public NormalizeReviews() {
 
+
+    let storageBuffer = localStorage.getItem('displayOnlyComment');
+
+      if(storageBuffer) {
+        this.displayOnlyComments = Boolean(storageBuffer);
+      } else {
+        localStorage.setItem('displayOnlyComment', 'false');
+        console.log('>>> CREATED' + localStorage.getItem('displayOnlyComment'));
+      }
+
     this.showLoading = true;
 
     return this._reviews.getReviewsData().subscribe(_result=> {
@@ -202,8 +214,24 @@ export class ReviewsComponent implements OnInit, AfterViewInit {
     });
   }
 
+  public saveDisplayStatus() {
+
+    let temp = this.displayOnlyComments;
+
+    setTimeout(function() {
+
+      if(this.displayOnlyComments) localStorage.setItem('displayOnlyComment', 'true');
+      else localStorage.removeItem('displayOnlyComment');
+      
+      console.log('STASAAAAAAAAAAAAAAAA: ' + localStorage.getItem('displayOnlyComment'));
+
+    }, 100);
+
+  }
 
 }
+
+
 
 
 /*
