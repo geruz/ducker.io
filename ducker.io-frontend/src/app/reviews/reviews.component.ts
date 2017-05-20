@@ -28,7 +28,14 @@ export class ReviewsComponent implements OnInit, AfterViewInit {
   public StorageReviews: any;
   public StorageSize = 0;
 
-  public counterInfoLow = 0;
+  public displayOnlyComments = false;
+
+  public counterStatus = {
+    'counterInfoLow': 0,
+    'counterInfoHigh': 0,
+    'counterVisualLow': 0,
+    'counterVisualHigh': 0
+  }
 
 
   constructor(
@@ -49,7 +56,18 @@ export class ReviewsComponent implements OnInit, AfterViewInit {
   public clearReviews() {
     this.StorageReviews = null;
     this.container = null;
+
+    this.counterStatus = {
+      'counterInfoLow': 0,
+      'counterInfoHigh': 0,
+      'counterVisualLow': 0,
+      'counterVisualHigh': 0
+    }
+
+    this.StorageSize = 0;
+
   }
+
 
   public NormalizeReviewsInside() {
 
@@ -67,29 +85,52 @@ export class ReviewsComponent implements OnInit, AfterViewInit {
 
     this.StorageReviews = JSON.parse(exit);
 
+    let _counterReviews = 0;
+
+    let _counterStatus = {
+      'counterInfoLow': 0,
+      'counterInfoHigh': 0,
+      'counterVisualLow': 0,
+      'counterVisualHigh': 0
+    }
+
     this.StorageReviews.forEach(function(element,index) {
 
-      let _errors = element['errors'].split(';');
-      let _tempStorage_errors = [];
-      _errors.forEach(function(element2,index2) {
-        _tempStorage_errors.push(element2);
-      });
 
-      element['errors'] = _errors;
 
-      let _feelings = element['feelings'].split(';');
-      let _tempStorage_feelings = [];
-      _feelings.forEach(function(element2,index2) {
-        _tempStorage_feelings.push(element2);
-        console.log('element2: ' + element2);
-      });
+        _counterReviews++;
 
-      element['feelings'] = _feelings;
+        let _errors = element['errors'].split(';');
+        let _tempStorage_errors = [];
+        _errors.forEach(function(element2,index2) {
+          _tempStorage_errors.push(element2);
+        });
+
+        element['errors'] = _errors;
+
+        let _feelings = element['feelings'].split(';');
+        let _tempStorage_feelings = [];
+        _feelings.forEach(function(element2,index2) {
+          _tempStorage_feelings.push(element2);
+
+              if(element2 == 'Информативность ниже ожидаемой') _counterStatus['counterInfoLow']++;
+              if(element2 == 'Информативность выше ожиданий') _counterStatus['counterInfoHigh']++;
+              if(element2 == 'Визуальное удовольствие ниже ожидаемого') _counterStatus['counterVisualLow']++;
+              if(element2 == 'Визуальное удовольствие превосходит ожидания') _counterStatus['counterVisualHigh']++;
+
+        });
+
+        element['feelings'] = _feelings;
+
 
     });
 
     this.showLoading = false;
-    
+    this.StorageSize = _counterReviews;
+    this.counterStatus['counterInfoLow'] = _counterStatus['counterInfoLow'];
+    this.counterStatus['counterInfoHigh'] = _counterStatus['counterInfoHigh'];
+    this.counterStatus['counterVisualLow'] = _counterStatus['counterVisualLow'];
+    this.counterStatus['counterVisualHigh'] = _counterStatus['counterVisualHigh'];    
   }
 
   public NormalizeReviews() {
@@ -113,7 +154,15 @@ export class ReviewsComponent implements OnInit, AfterViewInit {
 
         let _counterReviews = 0;
 
+        let _counterStatus = {
+          'counterInfoLow': 0,
+          'counterInfoHigh': 0,
+          'counterVisualLow': 0,
+          'counterVisualHigh': 0
+        }
+
         this.StorageReviews.forEach(function(element,index) {
+         
 
           _counterReviews++;
 
@@ -128,9 +177,16 @@ export class ReviewsComponent implements OnInit, AfterViewInit {
           let _feelings = element['feelings'].split(';');
           let _tempStorage_feelings = [];
           _feelings.forEach(function(element2,index2) {
+
+            if(element2 == 'Информативность ниже ожидаемой') _counterStatus['counterInfoLow']++;
+            if(element2 == 'Информативность выше ожиданий') _counterStatus['counterInfoHigh']++;
+            if(element2 == 'Визуальное удовольствие ниже ожидаемого') _counterStatus['counterVisualLow']++;
+            if(element2 == 'Визуальное удовольствие превосходит ожидания') _counterStatus['counterVisualHigh']++;
+
             _tempStorage_feelings.push(element2);
-            // console.log('element2: ' + element2);
+
           });
+          
 
           element['feelings'] = _feelings;
 
@@ -139,6 +195,10 @@ export class ReviewsComponent implements OnInit, AfterViewInit {
         this.showLoading = false;
 
         this.StorageSize = _counterReviews;
+        this.counterStatus['counterInfoLow'] = _counterStatus['counterInfoLow'];
+        this.counterStatus['counterInfoHigh'] = _counterStatus['counterInfoHigh'];
+        this.counterStatus['counterVisualLow'] = _counterStatus['counterVisualLow'];
+        this.counterStatus['counterVisualHigh'] = _counterStatus['counterVisualHigh'];
     });
   }
 

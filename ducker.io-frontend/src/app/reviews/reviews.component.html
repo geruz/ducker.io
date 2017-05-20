@@ -7,6 +7,8 @@
                 <div class="flex-center-justify">
                         <h3>{{ PageTitle }}<div class="mar-t-8 mar-b-8 font-14 gray-54">{{ PageSubTitle }}</div></h3>                    
                         <div class="flex-right-center">
+                                                <button md-button (click)="clearReviews()">Сбросить</button>
+                    <button md-button color="primary">Сохранить</button>
                         <actions-home></actions-home>
                         <user-bar></user-bar>
                         </div>
@@ -16,49 +18,140 @@
                 <hr class="mar-t-16 mar-b-16" />
             </div>
             <div class="side-right-col">
-                <div class="side-right-left row mar-b-64">
 
-                    <div class="col-12" *ngIf="!StorageReviews">
-                        <div class="code-area" class="w100">
-                            <h4 class="gray-54 mar-b-16">Отрисовать JSON</h4>
-                            <textarea autofocus title="Вставьте JSON код прямо сюда" class="jsonElement" [(ngModel)]="container" name="container" (ngModelChange)="NormalizeReviewsInside()"></textarea>
-                        </div>
-                    </div>
+            
+                <div class="side-right-left mar-b-64" [ngSwitch]="displayOnlyComments">  <!-- start content -->
 
-                    <div class="col-12" *ngFor="let element of StorageReviews">
-                        <div class="review-group mar-b-24" *ngIf="element.comment"> 
-                            <div class="review-group--username mar-b-8"><a title="Перейти на профиль пользователя {{element.username}}" href="https://au.ru/user/{{element.username}}/" target="_blank">{{element.username}}</a></div>
-                            <div class="review-group--settings mar-b-16">
-                                <div class="answer" title="Если функции не сработали. Отмечайте только те, что вы проверили. «Я не могу это сделать...»">{{element.errors}}</div>
+
+                    <div class="row" *ngSwitchCase="false">
+                        <div class="col-12" *ngIf="!StorageReviews">
+                            <div class="code-area" class="w100">
+                                <h4 class="gray-54 mar-b-16">Отрисовать JSON</h4>
+                                <textarea autofocus title="Вставьте JSON код прямо сюда" class="jsonElement" [(ngModel)]="container" name="container" (ngModelChange)="NormalizeReviewsInside()"></textarea>
                             </div>
-                              <div class="review-group--settings mar-b-16">
-                                <div class="answer" title="Каковы ваши общие впечатления о странице">
-                                    <ul>
-                                        <li *ngFor="let feel of element.feelings">
-                                            <span class="warning" *ngIf="feel == 'Информативность ниже ожидаемой'">
-                                            {{feel}}
-                                            </span>                                         
-                                             <span class="cool" *ngIf="feel == 'Информативность выше ожиданий'">
-                                            {{feel}}
-                                            </span>
-                                             <span *ngIf="feel !== 'Информативность ниже ожидаемой' && feel !== 'Информативность выше ожиданий'">
-                                            {{feel}}
-                                            </span>   
-                                        </li>
-                                    </ul>
+                        </div>
+
+                        <div class="col-12" *ngFor="let element of StorageReviews">
+                            <div class="review-group mar-b-24" > 
+                                <div class="review-group--username mar-b-8"><a title="Перейти на профиль пользователя {{element.username}}" href="https://au.ru/user/{{element.username}}/" target="_blank">{{element.username}}</a></div>
+                                <div class="review-group--settings mar-b-16">
+                                    <div class="answer" title="Если функции не сработали. Отмечайте только те, что вы проверили. «Я не могу это сделать...»">{{element.errors}}</div>
                                 </div>
+                                <div class="review-group--settings mar-b-16">
+                                    <div class="answer" title="Каковы ваши общие впечатления о странице">
+                                        <ul>
+                                            <li *ngFor="let feel of element.feelings">
+
+                                                <span class="warning" *ngIf="feel == 'Информативность ниже ожидаемой'">
+                                                {{feel}}
+                                                </span>                                         
+                                                <span class="cool" *ngIf="feel == 'Информативность выше ожиданий'">
+                                                {{feel}}
+                                                </span>
+
+                                                <span class="warning" *ngIf="feel == 'Визуальное удовольствие ниже ожидаемого'">
+                                                {{feel}}
+                                                </span>                                         
+                                                <span class="cool" *ngIf="feel == 'Визуальное удовольствие превосходит ожидания'">
+                                                {{feel}}
+                                                </span>
+
+                                                <span *ngIf="feel !== 'Информативность ниже ожидаемой' && feel !== 'Информативность выше ожиданий' && feel !== 'Визуальное удовольствие превосходит ожидания' && feel !== 'Визуальное удовольствие ниже ожидаемого'">
+                                                {{feel}}
+                                                </span>   
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="review-group--comment">{{element.comment}}</div>
                             </div>
-                            <div class="review-group--comment">{{element.comment}}</div>
                         </div>
                     </div>
 
-                 </div>
-                <div class="side-right-right pad-l-24 mar-r-24">
-                    <button md-button (click)="clearReviews()">Сбросить</button>
-                    <button md-button color="primary">Сохранить</button>
-                    <div class="pad-l-16 mar-t-24">
-                        <div class="mar-b-8">Количество отзывов</div>
-                        <h3>{{StorageSize}}</h3>
+
+                    <div class="row" *ngSwitchCase="true">
+                        <div class="col-12" *ngIf="!StorageReviews">
+                            <div class="code-area" class="w100">
+                                <h4 class="gray-54 mar-b-16">Отрисовать JSON</h4>
+                                <textarea autofocus title="Вставьте JSON код прямо сюда" class="jsonElement" [(ngModel)]="container" name="container" (ngModelChange)="NormalizeReviewsInside()"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-12" *ngFor="let element of StorageReviews">
+                            <div class="review-group mar-b-24" *ngIf="element.comment"> 
+                                <div class="review-group--username mar-b-8"><a title="Перейти на профиль пользователя {{element.username}}" href="https://au.ru/user/{{element.username}}/" target="_blank">{{element.username}}</a></div>
+                                <div class="review-group--settings mar-b-16">
+                                    <div class="answer" title="Если функции не сработали. Отмечайте только те, что вы проверили. «Я не могу это сделать...»">{{element.errors}}</div>
+                                </div>
+                                <div class="review-group--settings mar-b-16">
+                                    <div class="answer" title="Каковы ваши общие впечатления о странице">
+                                        <ul>
+                                            <li *ngFor="let feel of element.feelings">
+
+                                                <span class="warning" *ngIf="feel == 'Информативность ниже ожидаемой'">
+                                                {{feel}}
+                                                </span>                                         
+                                                <span class="cool" *ngIf="feel == 'Информативность выше ожиданий'">
+                                                {{feel}}
+                                                </span>
+
+                                                <span class="warning" *ngIf="feel == 'Визуальное удовольствие ниже ожидаемого'">
+                                                {{feel}}
+                                                </span>                                         
+                                                <span class="cool" *ngIf="feel == 'Визуальное удовольствие превосходит ожидания'">
+                                                {{feel}}
+                                                </span>
+
+                                                <span *ngIf="feel !== 'Информативность ниже ожидаемой' && feel !== 'Информативность выше ожиданий' && feel !== 'Визуальное удовольствие превосходит ожидания' && feel !== 'Визуальное удовольствие ниже ожидаемого'">
+                                                {{feel}}
+                                                </span>   
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="review-group--comment">{{element.comment}}</div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                 </div> <!-- end content -->
+
+
+                <div class="side-right-right wide pad-l-24 mar-r-24 reviews-stat">
+
+                    <div class="row mar-b-32">
+                        <div class="col-12">
+                            <md-checkbox color="primary" [(ngModel)]="displayOnlyComments">Спрятать отзывы без комментариев</md-checkbox>
+                        </div>
+                    </div>
+
+                    <div class="row mar-b-32">
+                        <div class="col-12">
+                            <div class="mar-b-8">Количество отзывов</div>
+                            <h3>{{StorageSize}}</h3>
+                        </div>
+                    </div>
+                    <div class="row mar-b-32">
+                        <div class="col-6">
+                            <div class="mar-b-16 reviews-stat--label">Информативность ниже ожидаемой</div>
+                            <div class="reviews-stat--number"><span class="warning">{{counterStatus.counterInfoLow}}</span></div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mar-b-16 reviews-stat--label">Информативность выше ожиданий</div>
+                            <div class="reviews-stat--number"><span class="cool">{{counterStatus.counterInfoHigh}}</span></div>
+                        </div>
+                    </div>
+                    <div class="row mar-b-32">
+                        <div class="col-6">
+                            <div class="mar-b-16 reviews-stat--label">Визуальное удовольствие ниже ожидаемого</div>
+                            <div class="reviews-stat--number"><span class="warning">{{counterStatus.counterVisualLow}}</span></div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mar-b-16 reviews-stat--label">Визуальное удовольствие превосходит ожидания</div>
+                            <div class="reviews-stat--number"><span class="cool">{{counterStatus.counterVisualHigh}}</span></div>
+                        </div>
                     </div>
                 </div>
             </div>
