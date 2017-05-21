@@ -11,24 +11,24 @@ Work in progres...
 </p>
 
 <h2>ducker.io-backend</h2>
-```
+```bash
 npm install
 ```
-```
+```bash
 npm start
 ```
 
 <h2>ducker.io-frontend</h2>
-```
+```bash
 npm install
 ```
-```
+```bash
 npm start
 ```
 <h2>ducker.io-static</h2>
-```
+```bash
 npm install
 ```
-```
+```bash
 npm start
 ```
