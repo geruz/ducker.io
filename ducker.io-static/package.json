@@ -1,6 +1,6 @@
 {
   "name": "node-express-static-example",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Serving static files in Express - example for Stack Overflow",
   "main": "app.js",
   "scripts": {
