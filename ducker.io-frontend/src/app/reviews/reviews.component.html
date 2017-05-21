@@ -72,7 +72,7 @@
                     <div class="row" *ngSwitchCase="true">
                         <div class="col-12" *ngIf="!StorageReviews">
                             <div class="code-area" class="w100">
-                                <h4 class="gray-54 mar-b-16">Отрисовать JSON</h4>
+                                <h4 class="color-blue mar-b-16">Отрисовать JSON</h4>
                                 <textarea autofocus title="Вставьте JSON код прямо сюда" class="jsonElement" [(ngModel)]="container" name="container" (ngModelChange)="NormalizeReviewsInside()"></textarea>
                             </div>
                         </div>
@@ -102,7 +102,14 @@
                                                 {{feel}}
                                                 </span>
 
-                                                <span *ngIf="feel !== 'Информативность ниже ожидаемой' && feel !== 'Информативность выше ожиданий' && feel !== 'Визуальное удовольствие превосходит ожидания' && feel !== 'Визуальное удовольствие ниже ожидаемого'">
+                                                <span class="warning" *ngIf="feel == 'Удобство использования ниже ожиданий'">
+                                                {{feel}}
+                                                </span>                                         
+                                                <span class="cool" *ngIf="feel == 'Удобство использования выше текущей версии'">
+                                                {{feel}}
+                                                </span>
+
+                                                <span *ngIf="feel !== 'Информативность ниже ожидаемой' && feel !== 'Информативность выше ожиданий' && feel !== 'Визуальное удовольствие превосходит ожидания' && feel !== 'Визуальное удовольствие ниже ожидаемого' && feel !== 'Удобство использования выше текущей версии' && feel !== 'Удобство использования ниже ожиданий'">
                                                 {{feel}}
                                                 </span>   
                                             </li>
@@ -134,23 +141,33 @@
                         </div>
                     </div>
                     <div class="row mar-b-32">
-                        <div class="col-6">
+                        <div class="col-12 col-xl-6 reviews-stat--group">
                             <div class="mar-b-16 reviews-stat--label">Информативность ниже ожидаемой</div>
                             <div class="reviews-stat--number"><span class="warning">{{counterStatus.counterInfoLow}}</span></div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-12 col-xl-6 reviews-stat--group">
                             <div class="mar-b-16 reviews-stat--label">Информативность выше ожиданий</div>
                             <div class="reviews-stat--number"><span class="cool">{{counterStatus.counterInfoHigh}}</span></div>
                         </div>
                     </div>
                     <div class="row mar-b-32">
-                        <div class="col-6">
+                        <div class="col-12 col-xl-6 reviews-stat--group">
                             <div class="mar-b-16 reviews-stat--label">Визуальное удовольствие ниже ожидаемого</div>
                             <div class="reviews-stat--number"><span class="warning">{{counterStatus.counterVisualLow}}</span></div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-12 col-xl-6 reviews-stat--group">
                             <div class="mar-b-16 reviews-stat--label">Визуальное удовольствие превосходит ожидания</div>
                             <div class="reviews-stat--number"><span class="cool">{{counterStatus.counterVisualHigh}}</span></div>
+                        </div>
+                    </div>
+                    <div class="row mar-b-32">
+                        <div class="col-12 col-xl-6 reviews-stat--group">
+                            <div class="mar-b-16 reviews-stat--label">Удобство использования ниже ожиданий</div>
+                            <div class="reviews-stat--number"><span class="warning">{{counterStatus.counterComfortLow}}</span></div>
+                        </div>
+                        <div class="col-12 col-xl-6 reviews-stat--group">
+                            <div class="mar-b-16 reviews-stat--label">Удобство использования выше текущей версии</div>
+                            <div class="reviews-stat--number"><span class="cool">{{counterStatus.counterComfortHigh}}</span></div>
                         </div>
                     </div>
                 </div>

@@ -55,11 +55,20 @@ span.warning {
     display: block;
 }
 
+.reviews-stat {
+    overflow-y: auto;
+}
+
 .reviews-stat .reviews-stat--label {
     font-size: 14px;
     line-height: 18px;
 }
 
+@media (max-width:1200px) {
+    .reviews-stat--group {
+        margin-bottom: 24px;
+    }
+}
 .reviews-stat .reviews-stat--number {
     font-size: 18px;
     font-family: 'Proxima Nova Semibold';
@@ -73,6 +82,31 @@ span.warning {
 .reviews-stat .row:last-child {
     border-bottom: 1px solid transparent;
 }
+
+
+@media (max-width:768px) {
+    .reviews-stat {
+        width: 90%;
+        position: absolute;
+        background: #fff;
+        z-index: 2000;
+        height: 100%;
+    }
+}
+
+@media (max-width:576px) {
+    .reviews-stat {
+        width: 100%;
+        position: absolute;
+        background: #fff;
+        z-index: 2000;
+        height: 100%;
+    }
+}
+
+
+
+
 
 span.cool {
     background: $super-green;

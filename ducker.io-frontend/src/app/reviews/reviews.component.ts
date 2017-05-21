@@ -1,12 +1,11 @@
 import {
   Component,
   AfterViewInit,
-  OnInit
+  OnInit,
 } from '@angular/core';
 
 import { AppState } from '../app.service';
-import {ActivatedRoute, Router, Params} from "@angular/router";
-
+import { ActivatedRoute, Router, Params } from "@angular/router";
 import { GetReviewsService } from './services/getReviews.service';
 
 import opros from '../../assets/mock-data/opros.json';
@@ -16,6 +15,7 @@ import opros from '../../assets/mock-data/opros.json';
   templateUrl: './reviews.component.html',
   styleUrls: ['reviews.component.scss']
 })
+
 export class ReviewsComponent implements OnInit, AfterViewInit {
 
   public showLoading = false;
@@ -34,9 +34,14 @@ export class ReviewsComponent implements OnInit, AfterViewInit {
     'counterInfoLow': 0,
     'counterInfoHigh': 0,
     'counterVisualLow': 0,
-    'counterVisualHigh': 0
+    'counterVisualHigh': 0,
+    'counterComfortLow': 0,
+    'counterComfortHigh': 0,     
   }
 
+  /*
+    A N G U L A R   P A R T
+  */
 
   constructor(
     private router: Router,
@@ -47,15 +52,20 @@ export class ReviewsComponent implements OnInit, AfterViewInit {
   }
 
   public ngOnInit() {
-
+    // INIT
     this.NormalizeReviews();
   }
 
   public ngAfterViewInit() {
-
+    // INIT VIEW
   }
 
+  /*
+    C U S T O M
+  */  
+
   public clearReviews() {
+
     this.StorageReviews = null;
     this.container = null;
 
@@ -63,80 +73,24 @@ export class ReviewsComponent implements OnInit, AfterViewInit {
       'counterInfoLow': 0,
       'counterInfoHigh': 0,
       'counterVisualLow': 0,
-      'counterVisualHigh': 0
+      'counterVisualHigh': 0,
+      'counterComfortLow': 0,
+      'counterComfortHigh': 0,       
     }
 
     this.StorageSize = 0;
 
-  }
+  } // end clearReviews
 
 
   public NormalizeReviewsInside() {
 
     this.showLoading = true;
-    
-
-    let exit = this.container.replace(/Отметка времени/gi, "timestamp"); 
-    exit = exit.replace(/Как Покупатель оцените информативность. «Я быстро нахожу на странице и понимаю о чём это...»/gi, "informativity"); 
-    exit = exit.replace(/Как Покупатель оцените работу функций на странице лота. Отмечайте только те, что вы проверили. «Я могу сделать и это работает \(следующий вопрос будет про не сработало\)»/gi, "functions"); 
-    exit = exit.replace(/Если функции не сработали. Отмечайте только те, что вы проверили. «Я не могу это сделать...»/gi, "errors"); 
-    exit = exit.replace(/Каковы ваши общие впечатления о странице/gi, "feelings"); 
-    exit = exit.replace(/Устройство, на котором вы смотрите аукцион/gi, "device"); 
-    exit = exit.replace(/Ваше имя пользователя \(логин\) на аукционе/gi, "username");
-    exit = exit.replace(/Ваши замечания и комментарии по странице/gi, "comment");
-
-    this.StorageReviews = JSON.parse(exit);
-
-    let _counterReviews = 0;
-
-    let _counterStatus = {
-      'counterInfoLow': 0,
-      'counterInfoHigh': 0,
-      'counterVisualLow': 0,
-      'counterVisualHigh': 0
-    }
-
-    this.StorageReviews.forEach(function(element,index) {
-
-
-
-        _counterReviews++;
-
-        let _errors = element['errors'].split(';');
-        let _tempStorage_errors = [];
-        _errors.forEach(function(element2,index2) {
-          _tempStorage_errors.push(element2);
-        });
-
-        element['errors'] = _errors;
-
-        let _feelings = element['feelings'].split(';');
-        let _tempStorage_feelings = [];
-        _feelings.forEach(function(element2,index2) {
-          _tempStorage_feelings.push(element2);
-
-              if(element2 == 'Информативность ниже ожидаемой') _counterStatus['counterInfoLow']++;
-              if(element2 == 'Информативность выше ожиданий') _counterStatus['counterInfoHigh']++;
-              if(element2 == 'Визуальное удовольствие ниже ожидаемого') _counterStatus['counterVisualLow']++;
-              if(element2 == 'Визуальное удовольствие превосходит ожидания') _counterStatus['counterVisualHigh']++;
-
-        });
-
-        element['feelings'] = _feelings;
-
-
-    });
-
-    this.showLoading = false;
-    this.StorageSize = _counterReviews;
-    this.counterStatus['counterInfoLow'] = _counterStatus['counterInfoLow'];
-    this.counterStatus['counterInfoHigh'] = _counterStatus['counterInfoHigh'];
-    this.counterStatus['counterVisualLow'] = _counterStatus['counterVisualLow'];
-    this.counterStatus['counterVisualHigh'] = _counterStatus['counterVisualHigh'];    
-  }
+    this.ConvertorJSON(this.container);
+ 
+  } // end NormalizeReviewsInside
 
   public NormalizeReviews() {
-
 
     let storageBuffer = localStorage.getItem('displayOnlyComment');
 
@@ -151,8 +105,12 @@ export class ReviewsComponent implements OnInit, AfterViewInit {
 
     return this._reviews.getReviewsData().subscribe(_result=> {
         let temp = JSON.stringify(_result);
-        // console.log('temp: ' + temp);
+        this.ConvertorJSON(temp);
+    });
 
+  } // end NormalizeReviews
+
+  public ConvertorJSON(temp) {
         let exit = temp.replace(/Отметка времени/gi, "timestamp"); 
         exit = exit.replace(/Как Покупатель оцените информативность. «Я быстро нахожу на странице и понимаю о чём это...»/gi, "informativity"); 
         exit = exit.replace(/Как Покупатель оцените работу функций на странице лота. Отмечайте только те, что вы проверили. «Я могу сделать и это работает \(следующий вопрос будет про не сработало\)»/gi, "functions"); 
@@ -170,8 +128,10 @@ export class ReviewsComponent implements OnInit, AfterViewInit {
           'counterInfoLow': 0,
           'counterInfoHigh': 0,
           'counterVisualLow': 0,
-          'counterVisualHigh': 0
-        }
+          'counterVisualHigh': 0,
+          'counterComfortLow': 0,
+          'counterComfortHigh': 0, 
+       }
 
         this.StorageReviews.forEach(function(element,index) {
          
@@ -194,7 +154,9 @@ export class ReviewsComponent implements OnInit, AfterViewInit {
             if(element2 == 'Информативность выше ожиданий') _counterStatus['counterInfoHigh']++;
             if(element2 == 'Визуальное удовольствие ниже ожидаемого') _counterStatus['counterVisualLow']++;
             if(element2 == 'Визуальное удовольствие превосходит ожидания') _counterStatus['counterVisualHigh']++;
-
+            if(element2 == 'Удобство использования ниже ожиданий') _counterStatus['counterComfortLow']++;
+            if(element2 == 'Удобство использования выше текущей версии') _counterStatus['counterComfortHigh']++;
+            
             _tempStorage_feelings.push(element2);
 
           });
@@ -211,35 +173,19 @@ export class ReviewsComponent implements OnInit, AfterViewInit {
         this.counterStatus['counterInfoHigh'] = _counterStatus['counterInfoHigh'];
         this.counterStatus['counterVisualLow'] = _counterStatus['counterVisualLow'];
         this.counterStatus['counterVisualHigh'] = _counterStatus['counterVisualHigh'];
-    });
-  }
+        this.counterStatus['counterComfortLow'] = _counterStatus['counterComfortLow'];
+        this.counterStatus['counterComfortHigh'] = _counterStatus['counterComfortHigh'];         
+  } // end ConvertorJSON
 
   public saveDisplayStatus() {
 
-    let temp = this.displayOnlyComments;
+    let temp = !this.displayOnlyComments;
 
     setTimeout(function() {
-
-      if(this.displayOnlyComments) localStorage.setItem('displayOnlyComment', 'true');
+      if(temp) localStorage.setItem('displayOnlyComment', 'true');
       else localStorage.removeItem('displayOnlyComment');
-      
-      console.log('STASAAAAAAAAAAAAAAAA: ' + localStorage.getItem('displayOnlyComment'));
-
     }, 100);
 
-  }
+  } // end saveDisplayStatus
 
-}
-
-
-
-
-/*
-                    <div class="col-12" *ngIf="!StorageReviews">
-                        <div class="code-area" class="w100">
-                            <h4 class="gray-54 mar-b-16">Отрисовать JSON</h4>
-                            <textarea autofocus title="Вставьте JSON код прямо сюда" class="jsonElement" [(ngModel)]="container" name="container" (ngModelChange)="NormalizeReviewsInside()"></textarea>
-                        </div>
-                    </div>
-
-                    */
+} // END OF ALL

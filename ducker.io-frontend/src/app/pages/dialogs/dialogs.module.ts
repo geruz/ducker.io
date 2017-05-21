@@ -11,7 +11,7 @@ import { HttpModule } from '@angular/http';
 
 @NgModule({
     imports: [
-        MaterialModule.forRoot(),
+        MaterialModule,
         BrowserModule,
         BrowserAnimationsModule,
         FormsModule,
