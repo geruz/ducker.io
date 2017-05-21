@@ -1,6 +1,6 @@
 {
   "name": "zmnv-api",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "REST API service with SQLite integration",
   "main": "index.js",
   "scripts": {
