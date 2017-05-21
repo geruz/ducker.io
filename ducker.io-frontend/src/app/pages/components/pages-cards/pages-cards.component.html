@@ -1,0 +1,12 @@
+<div class="col-12 col-sm-12 col-md-6 col-lg-12 page-card" *ngFor="let rendered of DocumentRendered | orderBy : [PagesSorting]">
+    <div class="flex-left-center">
+        <h3 class="list-title"><a routerLink="/pages/item/{{rendered.slug}}">{{rendered.title}}</a></h3>
+    </div>
+    <div class="page-card--tags flex-center-justify mar-b-16">
+        <span *ngFor="let tag of rendered.tags_id" class="page-card--tags-elem">
+            <span *ngIf="tag">{{tag.title}}</span>
+        </span>        
+        <span class="gray-54">Изменен {{ rendered.date_lastedit | date:'d.MM.y в HH:mm' }}</span>                            
+    </div>
+    <div class="contenter" [innerHtml]="rendered.content"></div>
+</div>   

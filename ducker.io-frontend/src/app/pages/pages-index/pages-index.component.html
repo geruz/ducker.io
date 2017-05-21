@@ -1,58 +1,33 @@
-<div class="subheader">
-    <div class="container">
-        <div class="row flex-left-center">
-            <div class="col-7 col-sm-8 col-md-9 col-lg-10">
-                <div class="flex-left-center">
+        <div class="windowcontainer">
+    
+        <left-side></left-side> 
 
-					<div class="mar-r-16 mar-t-3">
-						<button routerLink="/pages/" md-mini-fab class="fab-clear fab-gray">
-						<md-icon>library_books</md-icon>
-						</button>                        
-					</div>
-
-                    <h2>{{ DocumentTitle }}</h2>
-					
+        <div class="side-right">
+            <div class="side-right-full">
+                <div class="flex-center-justify">
+                        <h3>{{ DocumentTitle }}</h3>                    
+                        <div class="flex-right-center">
+                        <button md-button color="primary" (click)="openDialog()">НОВЫЙ ДОКУМЕНТ</button>
+                        
+                        <user-bar></user-bar>
+                        </div>
                 </div>
+       
+
+                <hr class="mar-t-16 mar-b-16" />
             </div>
-            <div class="col-5 col-sm-4 col-md-3 col-lg-2 editor flex-right-center">
-                <button md-button color="primary" (click)="openDialog()">НОВЫЙ ДОКУМЕНТ</button>
-            </div>
-        </div>
-    </div>
-</div>
+            <div class="side-right-col">
 
-<div class="app-upcontainer pad-b-80">    
-<div class="container">
+            
+                <div class="side-right-left row mar-b-64">  <!-- start content -->
+                    <pages-cards [DocumentRendered]="DocumentRendered" [PagesSorting]="PagesSorting"></pages-cards>
+                </div> <!-- end content -->
 
-    <div class="row">
 
-        <div class="col-12 col-sm-5 col-md-4 col-lg-3 mar-b-24-phone">
-            <div class="calendar-sidebar mar-t-24 mar-l-64-phone">
+                <div class="side-right-right  pad-l-24 mar-r-24">
                     <div><a routerLink="/pages" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Всё подряд</a></div>
                     <div *ngFor="let tags of TagsList"><a routerLink="/pages/tag/{{tags.slug}}" routerLinkActive="active">{{tags.title}}</a></div>
-            </div>
-        </div>
-
-        <div class="col-12 col-sm-7 col-md-8 col-lg-9" [ngSwitch]="PagesGridView">
-            <div class="options-view mar-b-24 mar-t-16 flex-left-justify">
-
-                    <button *ngIf="PagesGridView == 'one'" (click)="setPageGridView('one')" md-mini-fab class="fab-clear active">
-                        <md-icon>view_stream</md-icon>
-                    </button>
-                    <button *ngIf="PagesGridView !== 'one'" (click)="setPageGridView('one')" md-mini-fab class="fab-clear">
-                        <md-icon>view_stream</md-icon>
-                    </button>
-
-
-                    <button *ngIf="PagesGridView == 'two'" (click)="setPageGridView('two')" md-mini-fab class="fab-clear active">
-                        <md-icon>view_quilt</md-icon>
-                    </button>
-
-
-                    <button *ngIf="PagesGridView !== 'two'" (click)="setPageGridView('two')" md-mini-fab class="fab-clear">
-                        <md-icon>view_quilt</md-icon>
-                    </button>
-
+                    <hr>
                     <button md-mini-fab class="fab-clear" [mdMenuTriggerFor]="menuSorting" title="Сортировать по..."><md-icon>expand_more</md-icon></button>
                     <md-menu #menuSorting="mdMenu">
                         <button md-menu-item (click)="setPageSorting('-id')">Id</button>
@@ -60,63 +35,12 @@
                         <button md-menu-item (click)="setPageSorting('-date_created')">Дата создания</button>
                         <button md-menu-item (click)="setPageSorting('-date_lastedit')">Дата изменения</button>
                     </md-menu>
-                    
+
+                </div>
             </div>
-
-
-            <div [ngSwitch]="PagesGridView">  
-
-                <div class="row" *ngSwitchCase="'one'">
-
-
-                    <a class="col-12 col-sm-12 col-md-6 col-lg-12 caledar-list-card" *ngFor="let rendered of DocumentRendered | orderBy : [PagesSorting]" routerLink="/pages/item/{{rendered.slug}}">
-                        <div class="flex-left-center">
-                            <h3 class="list-title">{{rendered.title}}</h3>
-                        </div>
-                        <div class="caledar-list-card--tags">
-                            <span class="color-gray-85 mar-r-8">Изменен {{ rendered.date_lastedit | date:'d.MM.y — HH:mm' }}</span>                            
-                            <span *ngFor="let tag of rendered.tags_id" class="caledar-list-card--tags-elem">
-                                <span *ngIf="tag">{{tag.title}}</span>
-                            </span>
-                        </div>
-                        <div class="contenter" [innerHtml]="rendered.content"></div>
-                    </a>        
-                </div>
-
-                <div class="row" *ngSwitchCase="'two'">      
-                    <a class="col-12 col-sm-12 col-md-6 col-lg-6 caledar-list-card" *ngFor="let rendered of DocumentRendered | orderBy : [PagesSorting]" routerLink="/pages/item/{{rendered.slug}}">
-                        <div class="flex-left-center">
-                            <h3 class="list-title">{{rendered.title}}</h3>
-                        </div>
-                        <div class="caledar-list-card--tags">
-                            <span class="color-gray-85 mar-r-8">{{ rendered.date_lastedit | date:'d.MM.y — HH:mm' }}</span>
-                            <div *ngFor="let tag of rendered.tags_id" class="caledar-list-card--tags-elem">
-                                <span *ngIf="tag">{{tag.title}}</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="row" *ngSwitchCase="'three'">      
-                    <a class="col-12 col-sm-12 col-md-6 col-lg-4 caledar-list-card" *ngFor="let rendered of DocumentRendered | orderBy : [PagesSorting]" routerLink="/pages/item/{{rendered.slug}}">
-                        <div class="flex-left-center">
-                            <h3 class="list-title">{{rendered.title}}</h3>
-                        </div>
-                        <div class="caledar-list-card--tags">
-                            <div *ngFor="let tag of rendered.tags_id" class="caledar-list-card--tags-elem">
-                                <span *ngIf="tag">{{tag.title}}</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-            </div>
-
         </div>
-
-
-
     </div>
     
-</div>
-</div>
+    <div *ngIf="showLoading">
+        <sub-loader></sub-loader>
+    </div>

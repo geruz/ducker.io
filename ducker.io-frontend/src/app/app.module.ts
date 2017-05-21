@@ -48,6 +48,7 @@ import { GetReviewsService } from './reviews/services/getReviews.service';
 import { PagesDialogsModule } from './pages/dialogs/dialogs.module';
 import { PagesIndexComponent } from './pages/pages-index/pages-index.component';
 import { PagesComponent } from './pages/pages.component';
+import { PagesCardsComponent } from './pages/components/pages-cards/pages-cards.component';
 
 import { NoContentComponent } from './no-content';
 
@@ -106,6 +107,8 @@ type StoreType = {
 
     PagesIndexComponent,
     PagesComponent,
+    PagesCardsComponent,
+
     NoContentComponent,
 
     LoaderComponent,

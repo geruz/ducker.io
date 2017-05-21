@@ -13,7 +13,7 @@ import { AuthGuard } from './_guards/auth.guards';
 import { DataResolver } from './app.resolver';
 
 export const ROUTES: Routes = [
-   { path: '',  component: HomeComponent, canActivate: [ AuthGuard ]  },
+   { path: '',  component: ReviewsComponent, canActivate: [ AuthGuard ]  },
 
   { path: 'home',  component: HomeComponent, canActivate: [ AuthGuard ] },
 

@@ -37,6 +37,8 @@ export class ReviewsComponent implements OnInit, AfterViewInit {
     'counterVisualHigh': 0,
     'counterComfortLow': 0,
     'counterComfortHigh': 0,     
+    'counterErrorsLow': 0,
+    'counterErrorsHigh': 0,  
   }
 
   /*
@@ -75,7 +77,9 @@ export class ReviewsComponent implements OnInit, AfterViewInit {
       'counterVisualLow': 0,
       'counterVisualHigh': 0,
       'counterComfortLow': 0,
-      'counterComfortHigh': 0,       
+      'counterComfortHigh': 0,      
+      'counterErrorsLow': 0,
+      'counterErrorsHigh': 0,       
     }
 
     this.StorageSize = 0;
@@ -131,6 +135,8 @@ export class ReviewsComponent implements OnInit, AfterViewInit {
           'counterVisualHigh': 0,
           'counterComfortLow': 0,
           'counterComfortHigh': 0, 
+          'counterErrorsLow': 0,
+          'counterErrorsHigh': 0,
        }
 
         this.StorageReviews.forEach(function(element,index) {
@@ -141,10 +147,12 @@ export class ReviewsComponent implements OnInit, AfterViewInit {
           let _errors = element['errors'].split(';');
           let _tempStorage_errors = [];
           _errors.forEach(function(element2,index2) {
+            if(element2 == "Всё сработало") { _counterStatus['counterErrorsHigh']++; element2 = null; }
+            else { _counterStatus['counterErrorsLow']++; }
             _tempStorage_errors.push(element2);
           });
 
-          element['errors'] = _errors;
+          element['errors'] = _tempStorage_errors;
 
           let _feelings = element['feelings'].split(';');
           let _tempStorage_feelings = [];
@@ -162,9 +170,11 @@ export class ReviewsComponent implements OnInit, AfterViewInit {
           });
           
 
-          element['feelings'] = _feelings;
+          element['feelings'] = _tempStorage_feelings;
+
 
         });
+        
 
         this.showLoading = false;
 
@@ -175,6 +185,8 @@ export class ReviewsComponent implements OnInit, AfterViewInit {
         this.counterStatus['counterVisualHigh'] = _counterStatus['counterVisualHigh'];
         this.counterStatus['counterComfortLow'] = _counterStatus['counterComfortLow'];
         this.counterStatus['counterComfortHigh'] = _counterStatus['counterComfortHigh'];         
+        this.counterStatus['counterErrorsLow'] = _counterStatus['counterErrorsLow'];
+        this.counterStatus['counterErrorsHigh'] = _counterStatus['counterErrorsHigh'];                 
   } // end ConvertorJSON
 
   public saveDisplayStatus() {

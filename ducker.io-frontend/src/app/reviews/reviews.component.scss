@@ -51,6 +51,19 @@ span.warning {
     margin-bottom: 8px;
 }
 
+span.cool {
+    background: $super-green;
+    color: $gray-75;
+    padding: 4px 8px;
+    margin-bottom: 8px;
+    font-family: 'Proxima Nova Semibold';
+}
+
+span.warning--sub {
+    color: $red;
+    font-family: 'Proxima Nova Semibold';
+}
+
 .side-right-left span.warning {
     display: block;
 }
@@ -104,17 +117,6 @@ span.warning {
     }
 }
 
-
-
-
-
-span.cool {
-    background: $super-green;
-    color: $gray-75;
-    padding: 4px 8px;
-    margin-bottom: 8px;
-    font-family: 'Proxima Nova Semibold';
-}
 
 textarea.jsonElement {
     resize: vertical;

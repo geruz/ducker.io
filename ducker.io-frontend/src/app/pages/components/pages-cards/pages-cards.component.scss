@@ -1,0 +1,20 @@
+@import '../../../../styles/colors';
+
+.page-card {
+    border-bottom: 1px dotted $gray-16;
+    padding-bottom: 32px;
+    margin-bottom: 64px;
+}
+
+.page-card a {
+    color: $blue;
+    text-decoration: none;
+}
+
+.page-card .list-title {
+    margin-bottom: 8px;
+}
+
+.page-card .page-card--tags {
+    font-size: 13px;
+}

@@ -32,10 +32,12 @@
                         </div>
 
                         <div class="col-12" *ngFor="let element of StorageReviews">
-                            <div class="review-group mar-b-24" > 
+                            <div class="review-group mar-b-24"> 
                                 <div class="review-group--username mar-b-8"><a title="Перейти на профиль пользователя {{element.username}}" href="https://au.ru/user/{{element.username}}/" target="_blank">{{element.username}}</a></div>
                                 <div class="review-group--settings mar-b-16">
-                                    <div class="answer" title="Если функции не сработали. Отмечайте только те, что вы проверили. «Я не могу это сделать...»">{{element.errors}}</div>
+                                    <div class="answer" title="Если функции не сработали. Отмечайте только те, что вы проверили. «Я не могу это сделать...»">
+                                        <span class="warning--sub" *ngIf="element.errors">{{element.errors}}</span>
+                                    </div>
                                 </div>
                                 <div class="review-group--settings mar-b-16">
                                     <div class="answer" title="Каковы ваши общие впечатления о странице">
@@ -56,7 +58,14 @@
                                                 {{feel}}
                                                 </span>
 
-                                                <span *ngIf="feel !== 'Информативность ниже ожидаемой' && feel !== 'Информативность выше ожиданий' && feel !== 'Визуальное удовольствие превосходит ожидания' && feel !== 'Визуальное удовольствие ниже ожидаемого'">
+                                                <span class="warning" *ngIf="feel == 'Удобство использования ниже ожиданий'">
+                                                {{feel}}
+                                                </span>                                         
+                                                <span class="cool" *ngIf="feel == 'Удобство использования выше текущей версии'">
+                                                {{feel}}
+                                                </span>
+
+                                                <span *ngIf="feel !== 'Информативность ниже ожидаемой' && feel !== 'Информативность выше ожиданий' && feel !== 'Визуальное удовольствие превосходит ожидания' && feel !== 'Визуальное удовольствие ниже ожидаемого' && feel !== 'Удобство использования выше текущей версии' && feel !== 'Удобство использования ниже ожиданий'">
                                                 {{feel}}
                                                 </span>   
                                             </li>
@@ -81,7 +90,10 @@
                             <div class="review-group mar-b-24" *ngIf="element.comment"> 
                                 <div class="review-group--username mar-b-8"><a title="Перейти на профиль пользователя {{element.username}}" href="https://au.ru/user/{{element.username}}/" target="_blank">{{element.username}}</a></div>
                                 <div class="review-group--settings mar-b-16">
-                                    <div class="answer" title="Если функции не сработали. Отмечайте только те, что вы проверили. «Я не могу это сделать...»">{{element.errors}}</div>
+                                    <div class="answer" title="Если функции не сработали. Отмечайте только те, что вы проверили. «Я не могу это сделать...»">
+                                        <span *ngIf="element.errors == 'Всё сработало'">{{element.errors}}</span>
+                                        <span class="warning--sub" *ngIf="element.errors !== 'Всё сработало'">{{element.errors}}</span>
+                                    </div>
                                 </div>
                                 <div class="review-group--settings mar-b-16">
                                     <div class="answer" title="Каковы ваши общие впечатления о странице">
@@ -170,6 +182,8 @@
                             <div class="reviews-stat--number"><span class="cool">{{counterStatus.counterComfortHigh}}</span></div>
                         </div>
                     </div>
+
+
                 </div>
             </div>
         </div>

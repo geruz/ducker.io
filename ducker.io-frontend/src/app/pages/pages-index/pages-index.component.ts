@@ -17,6 +17,8 @@ import { OrderByPipe } from '../../parts/orderBy.pipes';
 
 export class PagesIndexComponent implements OnInit {
 
+  public showLoading = false;
+
   public DocumentTitle = 'Страницы';
   public DocumentRendered: any;
   public DocumentTags: any;
