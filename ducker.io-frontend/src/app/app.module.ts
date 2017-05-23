@@ -52,6 +52,11 @@ import { PagesCardsComponent } from './pages/components/pages-cards/pages-cards.
 
 import { NoContentComponent } from './no-content';
 
+import { LoggerComponent } from './logger/logger.component';
+
+// * CONTENT VIEW * //////////////////////////////////////////////////////////////////////////////////
+
+import { ViewsMiniComponent } from './parts/content-views/views-mini/views-mini.component';
 
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './shared/auth.service';
@@ -104,6 +109,11 @@ type StoreType = {
     HomeActionsComponent,
 
     ReviewsComponent,
+
+    LoggerComponent,
+
+    // * CONTENT VIEW * //////////////////////////////////////////////////////////////////////////////////
+    ViewsMiniComponent,
 
     PagesIndexComponent,
     PagesComponent,

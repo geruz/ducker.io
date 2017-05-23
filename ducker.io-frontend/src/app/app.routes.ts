@@ -12,6 +12,8 @@ import { AuthGuard } from './_guards/auth.guards';
 
 import { DataResolver } from './app.resolver';
 
+import { LoggerComponent } from './logger/logger.component';
+
 export const ROUTES: Routes = [
    { path: '',  component: ReviewsComponent, canActivate: [ AuthGuard ]  },
 
@@ -24,6 +26,7 @@ export const ROUTES: Routes = [
   ]}, 
   
   { path: 'reviews',  component: ReviewsComponent, canActivate: [ AuthGuard ] },
+  { path: 'logger',  component: LoggerComponent },  
   { path: 'login', component: LoginComponent },
   { path: '**',    component: NoContentComponent },
 ];

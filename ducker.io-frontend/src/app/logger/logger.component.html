@@ -1,0 +1,49 @@
+        <div class="windowcontainer">
+    
+        <left-side></left-side> 
+
+        <div class="side-right">
+            <div class="side-right-full">
+                <div class="flex-center-justify">
+                        <h3>{{ PageTitle }}<div class="mar-t-8 mar-b-8 font-14 gray-54">{{ PageSubTitle }}</div></h3>                    
+                        <div class="flex-right-center">
+                                                <button md-button>Сбросить</button>
+                    <button md-button color="primary">Сохранить</button>
+                        <actions-home></actions-home>
+                        <user-bar></user-bar>
+                        </div>
+                </div>
+       
+
+                <hr class="mar-t-16 mar-b-16" />
+            </div>
+
+            <div class="side-right-col">
+
+            
+                <div class="side-right-left mar-b-64" >  <!-- start content -->
+
+                    <div class="row">
+                            <views-mini [InputDataContainer]="LoggerContainer"></views-mini>
+                    </div>
+
+
+
+                 </div> <!-- end content -->
+
+
+                <div class="side-right-right wide pad-l-24 mar-r-24 reviews-stat">
+                    <div class="row">
+                        <div class="col-12">
+                            123
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- end side right -->
+
+        </div>
+    </div>
+    
+    <div *ngIf="showLoading">
+        <sub-loader></sub-loader>
+    </div>

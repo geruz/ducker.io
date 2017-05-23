@@ -149,6 +149,9 @@ body {
 .side-right-right.wide {
   width: 40%;
 }
+.side-right-right.wide.w320 {
+  width: 320px;
+}
 
 .side-right-col {
   display: -webkit-box;
@@ -389,4 +392,8 @@ hr {
 p.invalid {
   color: $red;
   font-size: 13px;
+}
+
+views-mini {
+    width: 100%;
 }
