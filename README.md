@@ -12,8 +12,8 @@
 ## For all nodes
 
 ```bash
-npm install
+yarn install
 ```
 ```bash
-npm start
+yarn start
 ```
