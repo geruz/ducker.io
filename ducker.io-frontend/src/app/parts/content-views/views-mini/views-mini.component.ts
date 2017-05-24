@@ -7,5 +7,10 @@ import { Component, Input } from '@angular/core';
 })
 export class ViewsMiniComponent {
     @Input('InputDataContainer') InputDataContainer: any; 
-    
+    public categoryOpacity = '0';
+
+    public toggleCategoryOpacity(status: string) {
+        if(status) this.categoryOpacity = '1';
+        else this.categoryOpacity = '0';
+    }
 }

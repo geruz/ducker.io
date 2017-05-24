@@ -8,13 +8,15 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
 @Injectable()
-export class GetReviewsService {
+export class LoggerService {
 
 
   constructor (private http: Http) {}
 
-  public getReviewsData() {
-      return this.http.get('/assets/mock-data/opros.json').map((res)=>res.json());
+  public _api = 'http://192.168.1.39:4200';
+
+  public getLoggerData() {
+      return this.http.get(this._api + '/logger/item-list').map((res)=>res.json());
   }
   
   

@@ -3,7 +3,6 @@
 
 
 .contentMini-group { 
-    border-bottom: 1px solid $gray-4;
     padding: 16px;
     -webkit-transition: all 80ms ease-in-out;
     -moz-transition: all 80ms ease-in-out;
@@ -12,7 +11,14 @@
     line-height: 26px;
     color: $gray-85;
     width: 100%;
+    cursor: pointer;
+    padding-right: 32px;
 }
+
+.contentMini-group:hover {
+    background-color: $light-blue;
+}
+
 
 .contentMini-group .contentMini-group--data {
     font-size: 13px;
@@ -49,18 +55,75 @@
     font-size: 13px;
     line-height: 18px;
     color: $gray-54;
+    padding-left: 48px;
+    -webkit-transition: all 80ms ease-in-out;
+    -moz-transition: all 80ms ease-in-out;
+    -ms-transition: all 80ms ease-in-out;
+    transition: all 80ms ease-in-out;      
 }
 
+
 .contentMini-group h2 {
-    font-size: 25px;
-    line-height: 28px;
+    font-size: 21px;
+    line-height: 24px;
     font-family: 'Proxima Nova Semibold';
     color: #000;
     margin: 0;
     margin-top: 4px;
-    margin-bottom: 8px;
+    margin-bottom: 4px;
     padding: 0;
-    letter-spacing: -0.6px;
+    letter-spacing: -0.5px;
+
+}
+
+.contentMini-group h2.status {
+    font-size: 24px;
+    margin-top: 8px;
+    margin-bottom: 12px;
+    padding-left: 48px;
+    background-image: url('/assets/icons/status_sprite.svg');
+    background-size: 24px 120px;
+    background-repeat: no-repeat;
+    background-position: left top;
+    line-height: 24px;
+    height: 24px;
+}
+
+.contentMini-group h2.status.waiting {
+    color: #000;
+    background-position: 0px -48px;
+}
+.contentMini-group h2.status.success {
+    color: $gray-75;
+    background-position: left top;
+}
+.contentMini-group h2.status.redo {
+    color: #9575CD;
+    background-position: 0px -96px;   
+}
+.contentMini-group h2.status.pause {
+    color: #FF9800;
+    background-position: 0px -72px;    
+}
+
+.contentMini-group a.category {
+
+    color: $blue-light;
+    text-decoration: none;
+    font-size: 13px;
+    -webkit-transition: all 30ms ease-in-out;
+    -moz-transition: all 30ms ease-in-out;
+    -ms-transition: all 30ms ease-in-out;
+    transition: all 30ms ease-in-out;     
+    margin-bottom: 8px;   
+    background: no-repeat right center;
+    background-position-y: 0px;
+}
+.contentMini-group a.category:hover {
+    padding-right: 24px;
+    color: $blue;
+    background-image: url('/assets/icons/eye2.svg');
+    background-size: 16px;
 }
 
 span.warning {

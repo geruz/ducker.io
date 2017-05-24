@@ -53,6 +53,7 @@ import { PagesCardsComponent } from './pages/components/pages-cards/pages-cards.
 import { NoContentComponent } from './no-content';
 
 import { LoggerComponent } from './logger/logger.component';
+import { LoggerService } from './logger/services/logger-storage.service';
 
 // * CONTENT VIEW * //////////////////////////////////////////////////////////////////////////////////
 
@@ -89,7 +90,8 @@ const APP_PROVIDERS = [
   AuthService,
   AuthGuard,
   GetReviewsService,
-  LeftSideService
+  LeftSideService,
+  LoggerService
 ];
 
 type StoreType = {

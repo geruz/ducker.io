@@ -6,7 +6,7 @@ import {
 
 import { AppState } from '../app.service';
 import { ActivatedRoute, Router, Params } from "@angular/router";
-import { GetReviewsService } from './services/getReviews.service';
+import { LoggerService } from './services/logger-storage.service';
 
 @Component({
   selector: 'logger',
@@ -17,47 +17,19 @@ export class LoggerComponent implements OnInit, AfterViewInit {
 
   public showLoading = false;
 
-  public PageTitle = 'LOGGER';
-  public PageSubTitle = 'Новая страница лота, объявления и тендера';
+  public PageTitle = 'Утверждение решений';
+  public PageSubTitle = 'Глобальные стили. Дизайн, функционал страниц и т.д.';
 
   public LoggerContainer = [
     { 
-      'date': '23.01.88',
+      'date_start': '1495639921988',
+      'date_end': '1495639921988',
       'title': 'Привет',
-      'content': 'Привет, я такой-=то такой0-то'
-    },
-    { 
-      'date': '23.01.88',
-      'title': 'Привет',
-      'content': 'Привет, я такой-=то такой0-то'
-    },
-    { 
-      'date': '23.01.88',
-      'title': 'Привет',
-      'content': 'Привет, я такой-=то такой0-то'
-    },
-    { 
-      'date': '23.01.88',
-      'title': 'Привет',
-      'content': 'Привет, я такой-=то такой0-то'
-    },
-    { 
-      'date': '23.01.88',
-      'title': 'Привет',
-      'content': 'Привет, я такой-=то такой0-то'
-    },
-    { 
-      'date': '23.01.88',
-      'title': 'Привет',
-      'content': 'Привет, я такой-=то такой0-то'
-    },
-    { 
-      'date': '23.01.88',
-      'title': 'Привет',
-      'content': 'Привет, я такой-=то такой0-то'
-    },
-    
+      'status': 'waiting',
+      'content': 'Привет, я такой-=то такой0-то',
+    }    
   ]
+
 
   /* ////////////////////////////////////////////////////////////////////////////////////////////////////
     A N G U L A R   P A R T
@@ -66,14 +38,14 @@ export class LoggerComponent implements OnInit, AfterViewInit {
   constructor(
     private router: Router,
     private _routeActive: ActivatedRoute,
-    // private _reviews: GetReviewsService
+    private _LOGGER: LoggerService
   ) {
 
   }
 
   public ngOnInit() {
     // INIT
-    
+    this.getLoggerItems();
   }
 
   public ngAfterViewInit() {
@@ -84,7 +56,12 @@ export class LoggerComponent implements OnInit, AfterViewInit {
     C U S T O M
   */
 
-
+  private getLoggerItems() {
+    this._LOGGER.getLoggerData().subscribe(
+      (result) => {
+          this.LoggerContainer = result;
+      });
+  }
 
 
 

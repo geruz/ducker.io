@@ -21,8 +21,9 @@ var _CalendarItems;
 var _CalendarTaglist;
 
 var _PagesItems;
-
 var _PagesViewGrid;
+
+var _LoggerItems;
 
 app.use(allowCrossDomain);
 app.use(bodyParser.json());
@@ -99,8 +100,8 @@ app.post('/calendar/new', function(req, res) {
 		var id = req.body.tagsExit;
 
         let currentDate = new Date();
-// month array
         let month = new Array();
+
         month[0] = "января";
         month[1] = "февраля";
         month[2] = "марта";
@@ -128,7 +129,7 @@ app.post('/calendar/new', function(req, res) {
         month_slug[10] = "11";
         month_slug[11] = "12";  
 
-// date
+
         let _Day = currentDate.getDate();
         let _Month = month[currentDate.getMonth()];
         let _Year = currentDate.getFullYear();
@@ -303,6 +304,19 @@ app.post('/pages/new', function(req, res) {
 });
 
 
+
+
+// ******************* L O G G E R ************************
+
+app.get('/logger/item-list', function (req, res) {
+	res.json(_LoggerItems);
+});
+
+
+
+
+
+
 //// AUTH
 
 app.post('/auth/login/:slug', function(req, res) {
@@ -358,6 +372,7 @@ app.listen(4200, function () {
 	setCalendarItems();
 	setPagesItems();
 	getPagesViewGrid();
+	setLoggerItems();
 
 });
 
@@ -494,6 +509,26 @@ function setPagesItems() {
 	} else {
 		console.log('BY CACHE / CALENTAR LIST >>    SELECT <ALL> FROM `calendar_list` ORDER BY `id`');
 	}
+}
+
+// >>>>>> L O G G E R
+function setLoggerItems() {
+
+	if(!_LoggerItems) {
+		db.all("SELECT * FROM `logger_list` ORDER BY `date_start` DESC", 
+			function(e,r) {
+				try {
+					_LoggerItems = r;	
+					console.log('[! DB -> CACHE] >> LOGGER LIST  — `logger_list`');
+				} catch(e) {
+					console.log('!!!! ERROR CATCHED: ' + e);
+				}
+
+		});			
+	} else {
+		console.log('BY CACHE / LOGGER LIST >>    SELECT <ALL> FROM `logger_list` ORDER BY `id`');
+	}
+
 }
 
 // >>>>>>>>> C O M M O N
