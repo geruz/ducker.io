@@ -4,7 +4,7 @@
         <div class="date">{{element.date_start | date}}</div>
         <div class="flex-center-justify">
             <h2 class="status" [className]="'status '+ element.status">{{element.title}}</h2>
-            <div class="date mar-l-24 flex-center" [ngStyle]="{'opacity': categoryOpacity}"><a class="category" href="#">Модераторские функции</a></div>
+            <div *ngFor="let inside of element.abstraction_slug" class="date mar-l-24 flex-center" [ngStyle]="{'opacity': categoryOpacity}"><a class="category" routerLink="/logger/{{inside.slug}}">{{inside.title}}</a></div>
         </div>
         
     </div>

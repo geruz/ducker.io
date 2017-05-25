@@ -23,7 +23,16 @@
             
                 <div class="side-right-left mar-b-64" >  <!-- start content -->
 
-                    <div class="row">
+                    <div class="row" [ngSwitch]="_displayAbstractionBar">
+                            <div class="col-12 mar-b-24" *ngSwitchCase="true">
+                                <div class="selection-bar flex-center-justify">
+                                    <div class="flex-left-center">
+                                        <div class="mar-r-16">Показать</div>
+                                        <div>{{currentAbstraction}}</div>
+                                    </div>
+                                    <div routerLink="/logger">Закрыть</div>
+                                </div>
+                            </div>
                             <views-mini [InputDataContainer]="LoggerContainer"></views-mini>
                     </div>
 
@@ -35,7 +44,7 @@
                 <div class="side-right-right wide pad-l-24 mar-r-24 reviews-stat">
                     <div class="row">
                         <div class="col-12">
-                            123
+                            1233
                         </div>
                     </div>
                 </div>

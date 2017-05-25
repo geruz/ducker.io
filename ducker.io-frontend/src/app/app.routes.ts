@@ -26,7 +26,13 @@ export const ROUTES: Routes = [
   ]}, 
   
   { path: 'reviews',  component: ReviewsComponent, canActivate: [ AuthGuard ] },
-  { path: 'logger',  component: LoggerComponent },  
+
+  { path: 'logger', children: [
+    { path: '', component: LoggerComponent },
+     { path: ':slug', component: LoggerComponent },
+     { path: 'item/:slug', component: LoggerComponent }
+  ]}, 
+
   { path: 'login', component: LoginComponent },
   { path: '**',    component: NoContentComponent },
 ];

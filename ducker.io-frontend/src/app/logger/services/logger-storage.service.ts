@@ -13,12 +13,19 @@ export class LoggerService {
 
   constructor (private http: Http) {}
 
-  public _api = 'http://192.168.1.39:4200';
+  public _api = 'http://localhost:4200';
 
   public getLoggerData() {
-      return this.http.get(this._api + '/logger/item-list').map((res)=>res.json());
+      return this.http.get(this._api + '/logger').map((res)=>res.json());
   }
-  
+
+  public getLoggerBySlug(slug: string) {
+      return this.http.get(this._api + '/logger/' + slug).map((res)=>res.json());
+  }  
+
+  public getLoggerByAbstraction(abstraction: string) {
+    return this.http.get(this._api + '/logger/abstraction/' + abstraction).map((res)=>res.json());
+  }
   
 /*
 

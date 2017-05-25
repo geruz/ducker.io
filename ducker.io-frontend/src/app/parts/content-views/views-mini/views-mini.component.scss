@@ -4,6 +4,7 @@
 
 .contentMini-group { 
     padding: 16px;
+    padding-bottom: 8px;
     -webkit-transition: all 80ms ease-in-out;
     -moz-transition: all 80ms ease-in-out;
     -ms-transition: all 80ms ease-in-out;   
@@ -13,6 +14,7 @@
     width: 100%;
     cursor: pointer;
     padding-right: 32px;
+    margin-bottom: 16px;
 }
 
 .contentMini-group:hover {

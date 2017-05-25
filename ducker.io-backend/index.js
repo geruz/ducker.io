@@ -1,8 +1,9 @@
 var express = require('express');
-var sqlite3 = require('sqlite3').verbose();
-var db = new sqlite3.Database('ducker-io.db');
+
+var DuckerDB = require('./db');
 var SHA256 = require("crypto-js/sha256");
 
+var path = require('path');
 var jmespath = require('jmespath');
 
 var bodyParser = require('body-parser');
@@ -15,306 +16,22 @@ var allowCrossDomain = function(req, res, next) {
     next();
 }
 
+
+var ABSTRACTIONS = require('./parts/abstractions');
+var LOGGER = require('./parts/logger');
+var PAGES = require('./parts/pages');
+
 var app = express();
 
 var _CalendarItems;
 var _CalendarTaglist;
 
-var _PagesItems;
-var _PagesViewGrid;
-
-var _LoggerItems;
 
 app.use(allowCrossDomain);
 app.use(bodyParser.json());
 
-// ROUTES ---------------------------------------------
-
-// GET ITEM
-app.get('/calendar/item-list', function (req, res) {
-
-	res.json(_CalendarItems);
-
-});
-
-app.get('/calendar/item/:slug', function (req, res) {
-
-	var slug = req.params.slug;
-	// console.log('slug: ' + slug);
-	var exit;
-
-	exit = jmespath.search(_CalendarItems, "[?slug==`" + slug + "`]");
-
-	res.json(exit);
-
-});
-
-
-// GET TAGS
-app.get('/calendar/tag-list', function (req, res) {
-
-	res.json(_CalendarTaglist);
-
-});
-
-app.get('/calendar/tag/:slug', function (req, res) {
-
-	// [?tags_id[?slug==`statistic`]]
-
-	var slug = req.params.slug;
-	var exit;
-
-	exit = jmespath.search(_CalendarItems, "[?tags_id[?slug==`"+slug+"`]]");
-
-	res.json(exit);
-
-});
-
-app.get('/settings/pages/viewgrid', function (req, res) {
-
-	res.json(_PagesViewGrid);
-
-});
-
-
-// POST
-
-app.post('/calendar/item/:slug/update', function(req, res) {
-	var id = req.body.target_id;
-	var content = req.body.content;
-	var slug = req.params.slug;
-
-	db.all("UPDATE `calendar_list` SET `content`='" + content + "' WHERE `id`='" + id + "'",
-		function(e,r) {
-			console.log('>> R: ' + r);
-			console.log('>> E: ' + e);
-			_CalendarItems = null;
-			setCalendarItems();
-	});
-
-	res.json('КЛАСС');
-});
-
-app.post('/calendar/new', function(req, res) {
-
-		var id = req.body.tagsExit;
-
-        let currentDate = new Date();
-        let month = new Array();
-
-        month[0] = "января";
-        month[1] = "февраля";
-        month[2] = "марта";
-        month[3] = "апреля";
-        month[4] = "мая";
-        month[5] = "июня";
-        month[6] = "июля";
-        month[7] = "августа";
-        month[8] = "сентября";
-        month[9] = "октября";
-        month[10] = "ноября";
-        month[11] = "декабря";     
-
-        let month_slug = new Array();
-        month_slug[0] = "01";
-        month_slug[1] = "02";
-        month_slug[2] = "03";
-        month_slug[3] = "04";
-        month_slug[4] = "05";
-        month_slug[5] = "06";
-        month_slug[6] = "07";
-        month_slug[7] = "08";
-        month_slug[8] = "09";
-        month_slug[9] = "10";
-        month_slug[10] = "11";
-        month_slug[11] = "12";  
-
-
-        let _Day = currentDate.getDate();
-        let _Month = month[currentDate.getMonth()];
-        let _Year = currentDate.getFullYear();
-        let title = _Day + ' ' + _Month + ' ' + _Year;
-
-		let toSlug = _Year + '-' + month_slug[currentDate.getMonth()] + '-' + _Day;
-
-        // console.log('OUTPUT: ' + toSlug);	
-
-		db.all("INSERT INTO `calendar_list`(`date`,`title`,`slug`,`content`,`tags_id`) VALUES ('" + currentDate.getTime() + "','" + title + "','" + toSlug + "','','')",
-			function(e,r) {
-				console.log('{!} INSERT IN DB `calendar_list`');
-				exit = updateDataBase();
-			});
-		res.json(toSlug);
-});
-
-app.post('/calendar/item/:slug/remove', function(req, res) {
-	
-	var action = req.body.action;
-	var slug = req.params.slug;
-
-	if(action) {
-
-		db.all("DELETE FROM `calendar_list` WHERE `slug`='" + slug + "';",
-			function(e,r) {
-				_CalendarItems = null;
-				setCalendarItems();
-		});
-
-		res.json('DELETED');
-
-	} else res.json('NO');
-
-});
-
-app.post('/calendar/item/updateTags', function(req, res) {
-	
-	var id = req.body.target_id;
-	var tags_id = req.body.tags_id;
-
-	console.log('id: ' + id + ' / tags_id: ' + tags_id[0]['title']);
-
-	if(id) {
-
-		let go = findTagIdByTitle(tags_id[0]['title']);
-
-		
-		db.all("UPDATE `calendar_list` SET `tags_id`='" + go + "' WHERE `id`='" + id + "'",
-			function(e,r) {
-				_CalendarItems = null;
-				setCalendarItems();
-		}); 
-
-		res.json('UPDATED TAGS');
-
-	} else res.json('NO UPDATED TAGS');
-
-});
-
-
-// ******************* P A G E S ************************
-
-app.get('/pages/item-list', function (req, res) {
-	res.json(_PagesItems);
-});
-
-app.get('/pages/item/:slug', function (req, res) {
-
-	var slug = req.params.slug;
-	// console.log('slug: ' + slug);
-	var exit;
-
-	exit = jmespath.search(_PagesItems, "[?slug==`" + slug + "`]");
-
-	res.json(exit);
-
-});
-
-app.post('/pages/item/:slug/update', function(req, res) {
-	var id = req.body.target_id;
-	var content = req.body.content;
-	var slug = req.params.slug;
-
-	var date_lastedit = new Date();
-	date_lastedit = date_lastedit.getTime();
-
-	db.all("UPDATE `pages_list` SET `content`='" + content + "',`date_lastedit`='"+ date_lastedit +"' WHERE `slug`='" + slug + "'",
-		function(e,r) {
-			_PagesItems = null;
-			setPagesItems();
-			console.log('UPDATE `pages_list`' + ' content: ' + content + ' / slug: ' + slug);
-	});
-
-	res.json('Запись обновлена');
-});
-
-app.post('/pages/item/:slug/remove', function(req, res) {
-	
-	var action = req.body.action;
-	var slug = req.params.slug;
-
-	if(action) {
-
-		db.all("DELETE FROM `pages_list` WHERE `slug`='" + slug + "';",
-			function(e,r) {
-				_PagesItems = null;
-				setPagesItems();
-		});
-
-		res.json('DELETED');
-
-	} else res.json('NO');
-
-});
-
-app.post('/pages/item/updateTags', function(req, res) {
-	
-	var id = req.body.target_id;
-	var tags_id = req.body.tags_id;
-
-	console.log('id: ' + id + ' / tags_id: ' + tags_id[0]['title']);
-
-	if(id) {
-
-		let go = findTagIdByTitle(tags_id[0]['title']);
-
-		
-		db.all("UPDATE `pages_list` SET `tags_id`='" + go + "' WHERE `id`='" + id + "'",
-			function(e,r) {
-				_PagesItems = null;
-				setPagesItems();
-		}); 
-
-		res.json('UPDATED PAGES TAGS');
-
-	} else res.json('NO UPDATED PAGES TAGS');
-
-});
-
-app.get('/pages/tag/:slug', function (req, res) {
-
-	// [?tags_id[?slug==`statistic`]]
-
-	var slug = req.params.slug;
-	var exit;
-
-	exit = jmespath.search(_PagesItems, "[?tags_id[?slug==`"+slug+"`]]");
-
-	res.json(exit);
-
-});
-
-app.post('/pages/new', function(req, res) {
-
-		var title = req.body.title;
-		var toSlug = req.body.toSlug;
-
-		console.log('toSlug: ' + toSlug + ' / title: ' + title);
-
-        let currentDate = new Date();
-		currentDate = currentDate.getTime();
-		
-		db.all("INSERT INTO `pages_list`(`date_created`,`date_lastedit`,`title`,`slug`,`content`,`tags_id`) VALUES ('" + currentDate + "','" + currentDate + "','" + title + "','" + toSlug + "','','')",
-			function(e,r) {
-				console.log('{!} INSERT IN DB `pages_list`');
-				console.log('ERROR: ' + e);
-				exit = updateDataBase();
-			});
-			
-		res.json(toSlug);
-});
-
-
-
-
-// ******************* L O G G E R ************************
-
-app.get('/logger/item-list', function (req, res) {
-	res.json(_LoggerItems);
-});
-
-
-
-
+app.use('/abstractions/', ABSTRACTIONS.router);
+app.use('/logger/', LOGGER.router);
 
 
 //// AUTH
@@ -327,7 +44,7 @@ app.post('/auth/login/:slug', function(req, res) {
 
 	if(action) {
 
-		db.all("SELECT * FROM `users_list` WHERE `login` LIKE '"+username+"' ORDER BY `id`", 
+		DuckerDB.DuckerDB.all("SELECT * FROM `users_list` WHERE `login` LIKE '"+username+"' ORDER BY `id`", 
 		function(e,r) {
 
 			let size = [];
@@ -365,14 +82,14 @@ app.post('/auth/login/:slug', function(req, res) {
 
 app.listen(4200, function () {
 
-	console.log('--->>> Ducker.io BACKEND SERVER ON 4200');
-	console.log('')
+	console.log(' ');
+	console.log('\x1b[44m DUCKER SERVER \x1b[0m BACKEND ON\x1b[36m 4200 \x1b[0m / #  Сервер запущен...');
+	console.log(' ');	
+	console.log('\x1b[32mИмпорт хранилищ:\x1b[0m');
+	console.log(' ');	
 
-	setCalendarTagsList();
-	setCalendarItems();
-	setPagesItems();
-	getPagesViewGrid();
-	setLoggerItems();
+	ABSTRACTIONS.getAbstractions();
+	LOGGER.getLogger();
 
 });
 
@@ -388,7 +105,7 @@ function authGuard(username, password) {
 	console.log('-----------------');
 
 	let exit;
-	db.all("SELECT * FROM `users_list` WHERE `login` LIKE '"+username+"' ORDER BY `id`", 
+	DuckerDB.DuckerDB.all("SELECT * FROM `users_list` WHERE `login` LIKE '"+username+"' ORDER BY `id`", 
 	function(e,r) {
 		console.log('pass from db: ' + r[0]['pass']);
 
@@ -409,7 +126,7 @@ function authGuard(username, password) {
 function setCalendarItems() {
 
 	if(!_CalendarItems) {
-		db.all("SELECT * FROM `calendar_list` ORDER BY `id`", 
+		DuckerDB.DuckerDB.all("SELECT * FROM `calendar_list` ORDER BY `id`", 
 			function(e,r) {
 
 					_CalendarItems = r;
@@ -437,7 +154,7 @@ function setCalendarItems() {
 function setCalendarTagsList() {
 
 	if(!_CalendarTaglist) {
-		db.all("SELECT * FROM `calendar_tags` ORDER BY `id`", 
+		DuckerDB.DuckerDB.all("SELECT * FROM `calendar_tags` ORDER BY `id`", 
 		function(e,r) {
 			_CalendarTaglist = r;
 			console.log('[! DB -> CACHE] >> CALENDAR TAGS  — `calendar_tags`');
@@ -484,7 +201,7 @@ function findCalendarItemsByTagId(_slug) {
 function setPagesItems() {
 
 	if(!_PagesItems) {
-		db.all("SELECT * FROM `pages_list` ORDER BY `date_lastedit` DESC", 
+		DuckerDB.DuckerDB.all("SELECT * FROM `pages_list` ORDER BY `date_lastedit` DESC", 
 			function(e,r) {
 
 					_PagesItems = r;
@@ -511,30 +228,11 @@ function setPagesItems() {
 	}
 }
 
-// >>>>>> L O G G E R
-function setLoggerItems() {
-
-	if(!_LoggerItems) {
-		db.all("SELECT * FROM `logger_list` ORDER BY `date_start` DESC", 
-			function(e,r) {
-				try {
-					_LoggerItems = r;	
-					console.log('[! DB -> CACHE] >> LOGGER LIST  — `logger_list`');
-				} catch(e) {
-					console.log('!!!! ERROR CATCHED: ' + e);
-				}
-
-		});			
-	} else {
-		console.log('BY CACHE / LOGGER LIST >>    SELECT <ALL> FROM `logger_list` ORDER BY `id`');
-	}
-
-}
 
 // >>>>>>>>> C O M M O N
 
 function updateDataBase() {
-		db.all("SELECT * FROM `calendar_list` ORDER BY `id`", 
+		DuckerDB.all("SELECT * FROM `calendar_list` ORDER BY `id`", 
 			function(e,r) {
 
 					_CalendarItems = r;
@@ -553,7 +251,7 @@ function updateDataBase() {
 					
 					console.log('[!] [UPDATE: DB -> CACHE] >> CALENDAR LIST  t: `calendar_list`');
 		});	
-		db.all("SELECT * FROM `pages_list` ORDER BY `id`", 
+		DuckerDB.DuckerDB.all("SELECT * FROM `pages_list` ORDER BY `id`", 
 			function(e,r) {
 
 					_PagesItems = r;
@@ -577,7 +275,7 @@ function updateDataBase() {
 function getPagesViewGrid() {
 
 	if(!_PagesViewGrid) {
-		db.all("SELECT `PagesGridView` FROM `user_settings`", 
+		DuckerDB.DuckerDB.all("SELECT `PagesGridView` FROM `user_settings`", 
 		function(e,r) {
 			_PagesViewGrid = r[0]['PagesGridView'];
 			// console.log('PAGE VIEW: ' + _PagesViewGrid);
