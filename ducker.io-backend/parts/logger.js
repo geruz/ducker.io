@@ -23,7 +23,7 @@ router.get('/', function (req, res) {
 
 router.get('/:slug', function (req, res) {
     let slug = req.params.slug;
-    let exit = getByID(slug);
+    let exit = jmespath.search(_LOGGER, "[?id==`" + slug + "`]");
 	res.json(exit);
 });
 

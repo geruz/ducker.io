@@ -7,6 +7,7 @@ import { Component, Input } from '@angular/core';
 })
 export class ViewsMiniComponent {
     @Input('InputDataContainer') InputDataContainer: any; 
+    @Input('ViewCase') ViewCase = 'mini';
     public categoryOpacity = '0';
 
     public toggleCategoryOpacity(status: string) {

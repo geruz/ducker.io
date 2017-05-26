@@ -149,6 +149,9 @@ body {
 .side-right-right.wide {
   width: 40%;
 }
+.side-right-right.wide50 {
+  width: 50%;
+}
 .side-right-right.wide.w320 {
   width: 320px;
 }
@@ -403,4 +406,10 @@ views-mini {
   width: 100%;
   background: $extra-blue;
   padding: 16px;
+}
+
+.mat-mini-fab.clear {
+  box-shadow: none !important;
+  background: transparent;
+  color: $gray-54;
 }

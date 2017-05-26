@@ -15,6 +15,7 @@
     cursor: pointer;
     padding-right: 32px;
     margin-bottom: 16px;
+    outline: none;
 }
 
 .contentMini-group:hover {
@@ -65,7 +66,7 @@
 }
 
 
-.contentMini-group h2 {
+.view-heading h2 {
     font-size: 21px;
     line-height: 24px;
     font-family: 'Proxima Nova Semibold';
@@ -78,7 +79,7 @@
 
 }
 
-.contentMini-group h2.status {
+.view-heading h2.status {
     font-size: 24px;
     margin-top: 8px;
     margin-bottom: 12px;
@@ -91,24 +92,30 @@
     height: 24px;
 }
 
-.contentMini-group h2.status.waiting {
+.view-heading h2.status.big {
+    font-size: 32px !important;
+    line-height: 24px;
+    height: 24px;
+}
+
+.view-heading h2.status.waiting {
     color: #000;
     background-position: 0px -48px;
 }
-.contentMini-group h2.status.success {
+.view-heading h2.status.success {
     color: $gray-75;
     background-position: left top;
 }
-.contentMini-group h2.status.redo {
+.view-heading h2.status.redo {
     color: #9575CD;
     background-position: 0px -96px;   
 }
-.contentMini-group h2.status.pause {
+.view-heading h2.status.pause {
     color: #FF9800;
     background-position: 0px -72px;    
 }
 
-.contentMini-group a.category {
+.view-heading a.category {
 
     color: $blue-light;
     text-decoration: none;
@@ -121,7 +128,7 @@
     background: no-repeat right center;
     background-position-y: 0px;
 }
-.contentMini-group a.category:hover {
+.view-heading a.category:hover {
     padding-right: 24px;
     color: $blue;
     background-image: url('/assets/icons/eye2.svg');

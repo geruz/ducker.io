@@ -28,9 +28,9 @@ export const ROUTES: Routes = [
   { path: 'reviews',  component: ReviewsComponent, canActivate: [ AuthGuard ] },
 
   { path: 'logger', children: [
-    { path: '', component: LoggerComponent },
+     { path: '', redirectTo: 'all', pathMatch: 'full' },
      { path: ':slug', component: LoggerComponent },
-     { path: 'item/:slug', component: LoggerComponent }
+     { path: '_abstraction/:slug', component: LoggerComponent }
   ]}, 
 
   { path: 'login', component: LoginComponent },

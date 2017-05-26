@@ -36,10 +36,14 @@
                             <views-mini [InputDataContainer]="LoggerContainer"></views-mini>
                     </div>
 
+                 </div> <!-- end content  -->
 
-
-                 </div> <!-- end content -->
-
+                 <div id="ModalItem" class="flex-center" *ngIf="RightContainer">
+                        <div class="ModalContainer">
+                            <div class="closer"><button routerLink="/logger/list" md-mini-fab class="clear"><md-icon>close</md-icon></button></div>
+                            <views-mini [InputDataContainer]="RightContainer" ViewCase="full"></views-mini>
+                        </div>
+                 </div>
 
                 <div class="side-right-right wide pad-l-24 mar-r-24 reviews-stat">
                     <div class="row">
@@ -48,6 +52,7 @@
                         </div>
                     </div>
                 </div>
+
             </div> <!-- end side right -->
 
         </div>

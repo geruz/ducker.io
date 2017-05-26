@@ -11,6 +11,7 @@ import { LoggerService } from './services/logger-storage.service';
 @Component({
   selector: 'logger',
   templateUrl: './logger.component.html',
+  styleUrls: ['./logger.component.scss']
 })
 
 export class LoggerComponent implements OnInit, AfterViewInit {
@@ -33,6 +34,8 @@ export class LoggerComponent implements OnInit, AfterViewInit {
     }    
   ];
 
+  public RightContainer: any;
+
   public currentAbstraction: string;
 
 
@@ -41,7 +44,7 @@ export class LoggerComponent implements OnInit, AfterViewInit {
   */
 
   constructor(
-    private router: Router,
+    private _router: Router,
     private _ActivatedRoute: ActivatedRoute,
     private _LOGGER: LoggerService
   ) {
@@ -54,16 +57,41 @@ export class LoggerComponent implements OnInit, AfterViewInit {
   }
 
   public ngAfterViewInit() {
+
     this._ActivatedRoute.params.subscribe(params => {
-        if(params['slug']) {
 
-          this.getByAbstraction(params['slug']);
-          this._displayAbstractionBar = true;         
+      let _slug = params['slug'];
+      let _router_url = this._router.url;
 
+      let reg = /_abstraction/g;
+      let _insideDetect = reg.test(_router_url);
+
+      if(_slug) {
+
+        if(_insideDetect) {
+          // console.log('inside abstraction: ' + _slug);
+          this._displayAbstractionBar = true;
+          this.getByAbstraction(_slug);
         } else {
+          // console.log('! inside logger' + _slug);
           this._displayAbstractionBar = false;
+          this._LOGGER.getLoggerById(_slug).subscribe((res) => {
+            this.RightContainer = res[0];
+            //console.log(JSON.stringify(this.RightContainer));
+          })
         }
+
+        if(_insideDetect && _slug == '_abstraction') {
+          console.log('COLLISION DETECTED! ROUTING');
+          this._router.navigateByUrl('/logger');
+        }
+
+      } else {
+        this._displayAbstractionBar = false;
+      }
+
     });
+
   }
 
   /* ////////////////////////////////////////////////////////////////////////////////////////////////////
