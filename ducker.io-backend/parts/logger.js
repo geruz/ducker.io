@@ -25,8 +25,7 @@ var allowCrossDomain = function(req, res, next) {
     next();
 }
 
-app.use(allowCrossDomain);
-app.use(bodyParser.json());
+router.use(allowCrossDomain);
 
 // Роутинг. Отображение данных.
 

@@ -1,0 +1,20 @@
+<div (mouseenter)="toggleCategoryOpacity('true')" (mouseleave)="toggleCategoryOpacity(null)" *ngIf="ViewCase == 'mini'">
+    <div class="col-12" *ngFor="let element of InputDataContainer">
+        <div class="contentMini-group view-heading" routerLink="/logger/{{element.id}}"> 
+            <div class="date">{{element.date_start | date}}</div>
+            <div class="flex-center-justify">
+                <h2 class="status" [className]="'status '+ element.status">{{element.title}}</h2>
+                <div *ngFor="let inside of element.abstraction_slug" class="date mar-l-24 flex-center" [ngStyle]="{'opacity': categoryOpacity}"><a class="category" routerLink="/logger/_abstraction/{{inside.slug}}">{{inside.title}}</a></div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<div *ngIf="ViewCase == 'full'">
+        <div class="view-heading mar-b-16"> 
+            <div class="date mar-b-24">{{InputDataContainer.date_start | date}}</div>
+            <h2 class="status big" [className]="'status big '+ InputDataContainer.status">{{InputDataContainer.title}}</h2>
+            <div *ngFor="let inside of InputDataContainer.abstraction_slug" class="date mar-l-48"><a class="category" routerLink="/logger/_abstraction/{{inside.slug}}">{{inside.title}}</a></div>
+        </div>
+</div>
