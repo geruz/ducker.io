@@ -4,6 +4,8 @@ var express = require('express');
 var router = express.Router();
 var jmespath = require('jmespath');
 
+var bodyParser = require('body-parser');
+
 var _ABSTRACTIONS = require('./abstractions');
 
 /* ######################################################################################
@@ -15,6 +17,17 @@ var _ABSTRACTIONS = require('./abstractions');
 
 var _LOGGER;
 
+
+var allowCrossDomain = function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+}
+
+app.use(allowCrossDomain);
+app.use(bodyParser.json());
+
 // Роутинг. Отображение данных.
 
 router.get('/', function (req, res) {
@@ -23,7 +36,7 @@ router.get('/', function (req, res) {
 
 router.get('/:slug', function (req, res) {
     let slug = req.params.slug;
-    let exit = getByID(slug);
+    let exit = jmespath.search(_LOGGER, "[?id==`" + slug + "`]");
 	res.json(exit);
 });
 

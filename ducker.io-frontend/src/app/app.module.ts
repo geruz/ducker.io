@@ -9,7 +9,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import {
   NgModule, /* CUSTOM_ELEMENTS_SCHEMA, */
-  ApplicationRef
+  ApplicationRef,
+  LOCALE_ID
 } from '@angular/core';
 
 import { SharedModule } from './shared/shared.module';
@@ -50,14 +51,15 @@ import { PagesIndexComponent } from './pages/pages-index/pages-index.component';
 import { PagesComponent } from './pages/pages.component';
 import { PagesCardsComponent } from './pages/components/pages-cards/pages-cards.component';
 
-import { NoContentComponent } from './no-content';
+import { DesignLoggerComponent } from './design-logger';
+import { LoggerItemComponent } from './design-logger/logger-item';
+import { LoggerDialogsModule } from './design-logger/components/dialogs/dialogs.module';
+import { DesignLoggerControllerService } from './design-logger/services/design-logger.service';
 
-import { LoggerComponent } from './logger/logger.component';
-import { LoggerService } from './logger/services/logger-storage.service';
+import { NoContentComponent } from './no-content';
 
 // * CONTENT VIEW * //////////////////////////////////////////////////////////////////////////////////
 
-import { ViewsMiniComponent } from './parts/content-views/views-mini/views-mini.component';
 
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './shared/auth.service';
@@ -91,7 +93,7 @@ const APP_PROVIDERS = [
   AuthGuard,
   GetReviewsService,
   LeftSideService,
-  LoggerService
+  DesignLoggerControllerService,
 ];
 
 type StoreType = {
@@ -111,11 +113,12 @@ type StoreType = {
     HomeActionsComponent,
 
     ReviewsComponent,
+    
+    DesignLoggerComponent,
+    LoggerItemComponent,
 
-    LoggerComponent,
 
     // * CONTENT VIEW * //////////////////////////////////////////////////////////////////////////////////
-    ViewsMiniComponent,
 
     PagesIndexComponent,
     PagesComponent,
@@ -146,11 +149,13 @@ type StoreType = {
     FormsModule,
     HttpModule,
     PagesDialogsModule,
+    LoggerDialogsModule,
     RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules }),
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
     APP_PROVIDERS,
+    { provide: LOCALE_ID, useValue: "ru-RU" }
   ],
   // schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

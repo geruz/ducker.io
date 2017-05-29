@@ -18,7 +18,8 @@ var _ABSTRACTIONS;
 // Роутинг. Отображение данных.
 
 router.get('/', function (req, res) {
-	res.json(_ABSTRACTIONS);
+	// res.json(_ABSTRACTIONS);
+    res.json('go');
 });
 
 router.get('/:slug', function (req, res) {

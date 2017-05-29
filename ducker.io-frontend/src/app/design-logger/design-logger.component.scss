@@ -1,0 +1,74 @@
+@import '../../styles/colors';
+
+[LogsItem] {
+    padding-bottom: 24px;
+}
+
+[LogsItem] [LogsDate] {
+    font-size: 13px;
+    color: $gray-54;
+    line-height: 24px;
+    margin-bottom: 4px;
+}
+[LogsItem] [LogsDate] a { 
+    color: $gray-54;
+    text-decoration: none;
+}
+
+[LogsItem] [LogsHeader] {
+    display: inline-block;
+    font-size: 24px;
+    cursor: pointer;
+    color: $blue;
+    border-bottom: 3px dotted $extra-blue-2;
+    padding-bottom: 3px;
+}
+
+[LogsItem] [LogsHeader]:hover {
+    color: $super-green;
+    border-color: $super-green-2;
+    -webkit-transition: all 80ms ease-in-out;
+    -moz-transition: all 80ms ease-in-out;
+    -ms-transition: all 80ms ease-in-out;
+    transition: all 80ms ease-in-out;        
+}
+
+.abstraction-panel {
+    font-size: 13px;
+    color: $gray-85;
+    border: 1px solid $gray-line;
+    margin-bottom: 32px;
+    height: 51px;
+}
+
+.abstraction-panel .abstraction-menu {
+    display: inline-block;
+    font-size: 15px;
+    font-family: 'Proxima Nova Semibold';
+    cursor: pointer;
+    background-image: url('/assets/icons/triangle.svg');
+    background-size: 9px;
+    background-repeat: no-repeat;
+    background-position: right 6px;
+    padding-right: 16px;
+    color: #000;
+}
+.abstraction-panel .abstraction-menu:hover {
+    color: $blue;
+    background-image: url('/assets/icons/triangle-blue.svg');
+}
+
+.goToAll {
+    cursor: pointer;
+    color: $gray-75;
+    outline: none;
+    border-bottom: 1px dotted $gray-16;
+}
+
+.goToAll:hover {
+    color: $blue;
+    -webkit-transition: all 80ms ease-in-out;
+    -moz-transition: all 80ms ease-in-out;
+    -ms-transition: all 80ms ease-in-out;
+    transition: all 80ms ease-in-out;   
+}

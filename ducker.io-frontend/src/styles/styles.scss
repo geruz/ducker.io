@@ -131,6 +131,10 @@ body {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
+  -webkit-transition: all 280ms ease-in-out;
+  -moz-transition: all 280ms ease-in-out;
+  -ms-transition: all 280ms ease-in-out;
+  transition: all 280ms ease-in-out;     
 }
 
 .side-right-right {
@@ -148,6 +152,9 @@ body {
 
 .side-right-right.wide {
   width: 40%;
+}
+.side-right-right.wide50 {
+  width: 50%;
 }
 .side-right-right.wide.w320 {
   width: 320px;
@@ -403,4 +410,54 @@ views-mini {
   width: 100%;
   background: $extra-blue;
   padding: 16px;
+}
+
+.mat-mini-fab.clear {
+  box-shadow: none !important;
+  background: transparent;
+  color: $gray-54;
+}
+
+.mat-raised-button {
+  box-shadow: none !important;
+}
+
+.mat-tooltip {
+    background: #434343 !important;
+    font-size: 15px !important;
+}
+
+
+.mat-tooltip { 
+    color:rgba(255,255,255,0.85) !important;
+    padding:6px 8px;
+    border-radius:2px;
+    font-family:'Proxima Nova Regular',sans-serif !important;
+    font-size: 13px !important;
+    margin: 2px !important;
+    
+    max-width:250px
+}
+
+.mat-menu-panel {
+-webkit-box-shadow: 0px 10px 5px -9px rgba(0,0,0,0.15);
+-moz-box-shadow: 0px 10px 5px -9px rgba(0,0,0,0.15);
+box-shadow: 0px 10px 5px -9px rgba(0,0,0,0.15) !important;
+margin-top: 24px;
+}
+
+.mat-menu-content {
+  background-color: #fff;
+  border: 1px solid $gray-line;
+  border-top: 0;
+  font-size: 13px;
+  padding: 0 !important;
+}
+
+.mat-menu-item {
+    line-height: 32px !important;
+    height: 43px !important;
+    font-size: 15px !important;
+    font-family: 'Proxima Nova Regular' !important;
+
 }

@@ -19,7 +19,7 @@ export class LoggerService {
       return this.http.get(this._api + '/logger').map((res)=>res.json());
   }
 
-  public getLoggerBySlug(slug: string) {
+  public getLoggerById(slug: string) {
       return this.http.get(this._api + '/logger/' + slug).map((res)=>res.json());
   }  
 
